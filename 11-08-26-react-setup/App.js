@@ -1,3 +1,5 @@
+import "./index.css";
+
 const heading1 = React.createElement("h1", { id: "heading" }, "Hello Gopi From React");
 // creating element in react
 

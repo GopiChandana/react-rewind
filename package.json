@@ -1,0 +1,34 @@
+{
+  "name": "react-rewind",
+  "version": "1.0.0",
+  "description": "Brushing up on React fundamentals through daily learning and hands-on-coding.",
+  "homepage": "https://github.com/gopichandana/react-rewind#readme",
+  "bugs": {
+    "url": "https://github.com/gopichandana/react-rewind/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gopichandana/react-rewind.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "scripts": {
+    "start": "parcel index.html",
+    "start:prod":"parcel build index.html",
+    "start:secure": "parcel index.html --https",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "browserslist": [
+    "> 0.2%",
+    "last 4 versions",
+    "not dead"
+  ],
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

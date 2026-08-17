@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 .vite/
 
 .DS_Store
+node_modules/
+.parcel-cache/
+dist/
