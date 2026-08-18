@@ -125,7 +125,8 @@ Since you don't have a Babel config file in your project sidebar, SWC is handlin
   | Feature | Standard HTML                       | React JSX                                                            |
   | ------- | ----------------------------------- | -------------------------------------------------------------------- |
   | Syntax  | Pure string path                    | Imported variable inside curly braces {}                             |
-  | Example | `<img src="./logo.png" alt="Logo">` | import logoImg from './logo.png'; `<img src={logoImg} alt="Logo" />` |
+  | Example | `<img src="./logo.png" alt="Logo">` | import logoImg from './logo.png'; 
+  `<img src={logoImg} alt="Logo" />` |
 
 Note: In JSX, tags like `<img>` must be explicitly self-closed with a trailing slash (/>), or the compilation will crash.
 
@@ -135,9 +136,9 @@ The basic syntax for a simple external web link remains identical between both s
 
 | Feature      | Standard HTML                           | React JSX                                                |
 | ------------ | --------------------------------------- | -------------------------------------------------------- |
-| Static Link  | <a href="https://google.com">Google</a> | <a href="https://google.com">Google</a> (Identical)      |
-| Dynamic Link | <a href="/user/123">Profile</a>         | <a href={/user/${userId}}>Profile</a> (Template literal) |
-| JS Actions   | <a href="javascript:void(0)"></a>       | Forbidden. You must use onClick handlers instead.        |
+| Static Link  | `<a href="https://google.com">Google</a>` | `<a href="https://google.com">Google</a>` (Identical)      |
+| Dynamic Link | `<a href="/user/123">Profile</a>`         | `<a href={/user/${userId}}>Profile</a> (Template literal)` |
+| JS Actions   | `<a href="javascript:void(0)"></a>`       | Forbidden. You must use onClick handlers instead.        |
 
 #### Key Summary Rule
 
