@@ -1,5 +1,5 @@
 
-* 17- 08 - 2026 
+                                    17- 08 - 2026 
 ----------------------------------------------------------------------------------------------
 1) webpack concepts to go through: 
 bundler → entry → output → loaders → plugins → dev server → code splitting → tree shaking → caching
@@ -546,7 +546,11 @@ When discussing this design pattern with engineering interviewers, use these thr
 * Security & Escaping: Browsers do not execute code inside an unrecognized type like application/json. This structure inherently protects your site against Basic Cross-Site Scripting (XSS) injection attacks, because any malicious string like <script>alert(1)</script> hidden inside the data will simply be read as flat, unexecuted text.
 * SEO Context Invalidation: Search engine crawlers (like Googlebot) read the raw HTML file first. Placing global site settings or page metadata right inside a structured JSON block helps crawlers understand the page configuration instantly before executing any rendering code.
 
+----------------------------------------------------------------------------------------------
 
+                                        18 - 08 - 26
+
+----------------------------------------------------------------------------------------------
 
 
 

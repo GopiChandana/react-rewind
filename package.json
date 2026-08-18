@@ -15,7 +15,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "parcel index.html",
-    "start:prod":"parcel build index.html",
+    "build": "parcel build index.html",
     "start:secure": "parcel index.html --https",
     "test": "jest"
   },
@@ -28,7 +28,9 @@
     "not dead"
   ],
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
   }
 }
