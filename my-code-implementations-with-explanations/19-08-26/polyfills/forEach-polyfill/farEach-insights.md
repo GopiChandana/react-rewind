@@ -65,7 +65,9 @@ To understand how to read your changes, let's look at the two distinct ways deve
 If you don't want to destroy your original array, you create a separate bucket (like a counter or a new array) outside the loop, fill it up inside the loop, and read it afterward.
 
 ```
-const originalArray =;const resultsBucket = []; // 1. Create an external bucket
+const originalArray =;
+
+const resultsBucket = []; // 1. Create an external bucket
 
 originalArray.myCustomForEach(function(num) {
   // 2. Put the calculated value into the external bucket

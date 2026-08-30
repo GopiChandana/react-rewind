@@ -146,3 +146,12 @@ vite.config.ts.timestamp-*
 node_modules/
 .parcel-cache/
 dist/
+
+To-be-done/
+
+#bhojanalaya files
+
+packages/bhojanalaya/dist/
+packages/bhojanalaya/features_to_build.md
+packages/bhojanalaya/REASONS_FOR_THIS_DESIGN.md
+packages/bhojanalaya/TAILWIND_SECRETS.md

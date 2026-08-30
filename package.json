@@ -10,27 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/gopichandana/react-rewind.git"
   },
+  "private": true,
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
-    "start:secure": "parcel index.html --https",
-    "test": "jest"
-  },
-  "devDependencies": {
-    "parcel": "^2.16.4"
-  },
-  "browserslist": [
-    "> 0.2%",
-    "last 4 versions",
-    "not dead"
+  "workspaces": [
+    "packages/*"
   ],
-  "dependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3"
+  "scripts": {
+   "start:bhojanalaya": "npm start --workspace=packages/bhojanalaya",
+    "start:kathavedika": "npm start --workspace=packages/kathavedika",
+    "start:soulswipe": "npm start --workspace=packages/soulswipe",
+    "start:streamVault": "npm start --workspace=packages/streamVault"
   }
+ 
 }
