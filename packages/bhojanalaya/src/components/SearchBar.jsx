@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { restaurants } from "../restaurantData";
 import { useDebounce } from "../hooks/useDebounce";
 import { useTabSync } from "../hooks/useTabSync";
+import { fuzzyMatch } from "../utils/fuzzyMatch";
 
 const SearchBar = ({ setResults }) => {
   const [query, setQuery] = useState("");
@@ -13,32 +14,47 @@ const SearchBar = ({ setResults }) => {
   useTabSync("veg_filter_active", (val) => setIsPureVegFilter(val === "true"));
 
   useEffect(() => {
-    const searchQuery = debouncedQuery.trim().toLowerCase();
+    const searchQuery = debouncedQuery.trim();
 
-    const filtered = CUISINES.filter((item) => {
-      let queryMatch = false;
-      if (searchQuery === "") {
-        queryMatch = true;
-      } else {
-        if (
-          item.cuisine.toLowerCase().includes(searchQuery) ||
-          item.name.toLowerCase().includes(searchQuery)
-        ) {
-          queryMatch = true;
-        }
-      }
+    console.log(CUISINES, "cuisinmes");
 
-      let vegFilterMatch = false;
-      if (isPureVegFilter) {
-        item.isPureVeg ? (vegFilterMatch = true) : (vegFilterMatch = false);
-      } else {
-        vegFilterMatch = true;
-      }
+    const scoredMatches = CUISINES.map((item) => {
+      const nameMatch = fuzzyMatch(item.name || "", searchQuery);
+      const dishMatch = fuzzyMatch(item.featuredDish || "", searchQuery);
 
-      return queryMatch && vegFilterMatch;
+      // cuisine's logic 
+      const cuisineTags = (item.cuisine || "").split(",").map(tag => tag.trim());
+      const tagMatches = cuisineTags.map(tag => fuzzyMatch(tag, searchQuery));
+      const anyTagMatched = tagMatches.some(match => match.matches);
+
+      const validTagScores = tagMatches.filter(m => m.matches).map(m => m.score);
+      const bestCuisineScore = validTagScores.length > 0 ? Math.min(...validTagScores) : Infinity;
+
+      const isMatched =
+        nameMatch.matches || anyTagMatched || dishMatch.matches;
+
+      const validScores = [];
+      if (nameMatch.matches) validScores.push(nameMatch.score);
+      if (anyTagMatched) validScores.push(bestCuisineScore);
+      if (dishMatch.matches) validScores.push(dishMatch.score);
+
+      const bestScore = validScores.length > 0 ? Math.min(...validScores) : Infinity;
+
+      return { item, isMatched: bestScore !== Infinity, score: bestScore };
     });
 
-    setResults(filtered);
+    console.log(scoredMatches, "scoredMatches");
+
+    const filteredAndSorted = scoredMatches
+      .filter((match) => {
+        if (!match.isMatched) return false;
+        if (isPureVegFilter && !match.item.isPureVeg) return false;
+        return true;
+      })
+      .sort((a, b) => a.score - b.score) // Closest character strings jump to index position 0
+      .map((match) => match.item);
+    console.log(filteredAndSorted, "filteredAndSorted");
+    setResults(filteredAndSorted);
   }, [debouncedQuery, isPureVegFilter]);
 
   return (

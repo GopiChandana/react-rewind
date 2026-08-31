@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useTransition } from "react";
 
 const CartContext = createContext();
 
@@ -24,17 +24,43 @@ const removeItemFromCart = (currentCart, itemToRemove) => {
   return updatedCart.filter((item) => item.quantity > 0);
 };
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => {
+  const [isTimelinePending, startTransition] = useTransition();
+
+  // Reset the history stack if the user makes a new move while undoing
+  const [timeline, setTimeline] = useState(() => {
     const saved = localStorage.getItem("bhojan_cart_items");
-    return saved ? JSON.parse(saved) : [];
+    const initialCart = saved ? JSON.parse(saved) : [];
+    const initialLabel = initialCart.length > 0 
+      ? `Restored Active Cart (${initialCart.length} items)` 
+      : "Session started";
+    return [{ cart: initialCart, actionLabel: initialLabel }];
   });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const cart = timeline[currentIndex]?.cart || [];
   console.log(cart, "cart");
 
-    useEffect(() => {
+  // Full session history—never cleared, tracks everything in order
+  const [auditStream, setAuditStream] = useState(() => {
+    const saved = localStorage.getItem("bhojan_cart_items");
+    const initialCart = saved ? JSON.parse(saved) : [];
+    
+    const initialLogText = initialCart.length > 0
+      ? `Session restored with ${initialCart.length} items from previous visit`
+      : "Session initialized";
+
+    return [{ timestamp: new Date().toLocaleTimeString(), text: initialLogText }];
+  });
+
+  useEffect(() => {
     const syncCartDataAcrossTabs = (e) => {
       if (e.key === "bhojan_cart_items") {
-        const updatedData = e.newValue ? JSON.parse(e.newValue) : [];
-        setCart(updatedData);
+        const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
+        setTimeline([{ cart: updatedCart, actionLabel: "Tabs Synchronized" }]);
+        setCurrentIndex(0);
+        setAuditStream(prev => [
+          ...prev,
+          { timestamp: new Date().toLocaleTimeString(), text: "Cart synced across browser tabs" }
+        ]);
       }
     };
     window.addEventListener("storage", syncCartDataAcrossTabs);
@@ -46,13 +72,100 @@ export function CartProvider({ children }) {
   }, [cart]);
 
   const addToCart = (dish) => {
-    const nextCartState = addItemToCart(cart, dish);
-    setCart(nextCartState);
+    // startTransition(() => {
+      const cleanTimeline = timeline.slice(0, currentIndex + 1);
+      const nextCartState = addItemToCart(cart, dish);
+
+      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Added ${dish.name}` }]);
+      setCurrentIndex(cleanTimeline.length);
+      
+      // Append permanently to absolute audit ledger
+      setAuditStream(prev => [
+        ...prev,
+        { timestamp: new Date().toLocaleTimeString(), text: `➕ Added ${dish.name} to cart` }
+      ]);
+    // });
   };
 
+
   const removeFromCart = (dish) => {
-    const nextCartState = removeItemFromCart(cart, dish);
-    setCart(nextCartState);
+    // startTransition(() => {
+      const cleanTimeline = timeline.slice(0, currentIndex + 1);
+      const nextCartState = removeItemFromCart(cart, dish);
+
+      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Removed ${dish.name}` }]);
+      setCurrentIndex(cleanTimeline.length);
+      
+      setAuditStream(prev => [
+        ...prev,
+        { timestamp: new Date().toLocaleTimeString(), text: `➖ Removed ${dish.name} from cart` }
+      ]);
+    // });
+  };
+
+
+  const clearCart = () => {
+    startTransition(() => {
+      const cleanTimeline = timeline.slice(0, currentIndex + 1);
+      setTimeline([...cleanTimeline, { cart: [], actionLabel: "Cleared Whole Cart" }]);
+      setCurrentIndex(cleanTimeline.length);
+      
+      setAuditStream(prev => [
+        ...prev,
+        { timestamp: new Date().toLocaleTimeString(), text: "🗑️ Cleared all items from cart" }
+      ]);
+    });
+  };
+
+  const rewindStep = () => {
+    if (currentIndex > 0) {
+      startTransition(() => {
+        setAuditStream(prev => [
+          ...prev,
+          { timestamp: new Date().toLocaleTimeString(), text: `⏪ Undo: Step ${currentIndex} → ${currentIndex - 1}` }
+        ]);
+        setCurrentIndex(currentIndex - 1);
+      });
+    }
+  };
+
+  const fastForwardStep = () => {
+    if (currentIndex < timeline.length - 1) {
+      startTransition(() => {
+        setAuditStream(prev => [
+          ...prev,
+          { timestamp: new Date().toLocaleTimeString(), text: `⏩ Redo: Step ${currentIndex} → ${currentIndex + 1}` }
+        ]);
+        setCurrentIndex(currentIndex + 1);
+      });
+    }
+  };
+
+  const jumpToTimelineIndex = (index) => {
+    startTransition(() => {
+      setAuditStream(prev => [
+        ...prev,
+        { timestamp: new Date().toLocaleTimeString(), text: `🔮 Restored: ${timeline[index]?.actionLabel}` }
+      ]);
+      setCurrentIndex(index);
+    });
+  };
+
+  const resetSession = () => {
+  
+    localStorage.removeItem("bhojan_cart_items");
+    localStorage.removeItem("bhojan_checkout_status");
+
+    
+    setTimeline([{ cart: [], actionLabel: "Session started" }]);
+    setCurrentIndex(0);
+
+    setAuditStream([
+      { 
+        timestamp: new Date().toLocaleTimeString(), 
+        text: "Session reset: Wiped all local data" 
+      }
+    ]);
   };
 
   let totalItems = 0;
@@ -62,11 +175,6 @@ export function CartProvider({ children }) {
     totalItems = totalItems + item.quantity;
     subtotalPrice = subtotalPrice + item.price * item.quantity;
   });
-
-  const clearCart = () => {
-    setCart([]);
-    localStorage.removeItem("bhojan_cart_items");
-  };
 
   const gstFee = Math.round(subtotalPrice * 0.05);
 
@@ -88,7 +196,19 @@ export function CartProvider({ children }) {
         gstFee,
         deliveryFee,
         platformFee,
-        subtotalPrice
+        subtotalPrice,
+
+        resetSession,
+        
+        timeline,
+        currentIndex,
+        auditStream,
+        rewindStep,
+        fastForwardStep,
+        jumpToTimelineIndex,
+        isTimelinePending,
+        canRewind: currentIndex > 0,
+        canFastForward: currentIndex < timeline.length - 1
       }}
     >
       {children}

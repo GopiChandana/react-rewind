@@ -155,3 +155,6 @@ packages/bhojanalaya/dist/
 packages/bhojanalaya/features_to_build.md
 packages/bhojanalaya/REASONS_FOR_THIS_DESIGN.md
 packages/bhojanalaya/TAILWIND_SECRETS.md
+packages/bhojanalaya/FUZZY_ALGORITHM_EXPLANATION.md
+packages/bhojanalaya/ALL_ABOUT_WEB_WORKERS.md
+packages/bhojanalaya/ALL_ABOUT_REWIND/

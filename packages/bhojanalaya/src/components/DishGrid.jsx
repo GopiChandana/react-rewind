@@ -1,14 +1,15 @@
 import React from "react";
 import DishCard from "./DishCard";
 
-const DishGrid = ({ results }) => {
+const DishGrid = ({ results,successfulOrderPlaced }) => {
+  console.log(results,"dishGrid")
   return (
     <div>
       {results?.length > 0 ? (
         <div className={styles.scrollView}>
           <div className={styles.gridContainer}>
             {results.map((item) => (
-              <DishCard dish={item} key={item.id} />
+              <DishCard dish={item} key={item.id} successfulOrderPlaced = {successfulOrderPlaced}/>
             ))}
           </div>
         </div>

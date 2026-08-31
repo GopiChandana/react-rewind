@@ -1,7 +1,8 @@
 import React from "react";
 import { useCart } from "../hooks/useCart";
 
-const DishCard = ({ dish}) => {
+const DishCard = ({ dish, successfulOrderPlaced }) => {
+  console.log(successfulOrderPlaced,"orderStatus")
   const {
     id,
     name,
@@ -35,19 +36,21 @@ const DishCard = ({ dish}) => {
         <strong>★ Must Try:</strong> {featuredDish}
       </div>
       <div className={styles.footerRow}>
-        <span className={styles.rating}>⭐ {rating}</span>
+        <span className={styles.rating}><span>⭐</span> {rating}</span>
         <span>{deliveryTime}</span>
         <span className="text-zinc-300">{costForTwo} for two</span>
         <button
-          onClick={() =>
-            addToCart({
-              id: id,
-              featuredDish: featuredDish,
-              name: name,
-              price: Math.floor(parseInt(costForTwo) / 2) || 150,
-            })
-          }
-          className="px-3.5 py-1.5 bg-orange-600/10 hover:bg-orange-600 text-orange-500 hover:text-white border border-orange-600/30 hover:border-orange-600 text-xs font-bold rounded-lg transition-all duration-200 active:scale-95 flex items-center gap-1 cursor-pointer shadow-sm"
+          onClick={() => {
+            if (!successfulOrderPlaced) {
+              addToCart({
+                id: id,
+                featuredDish: featuredDish,
+                name: name,
+                price: Math.floor(parseInt(costForTwo) / 2) || 150,
+              });
+            }
+          }}
+          className={`${!successfulOrderPlaced ? "cursor-pointer" : "cursor-none pointer-events-none"} px-3.5 py-1.5 bg-orange-600/10 hover:bg-orange-600 text-orange-500 hover:text-white border border-orange-600/30 hover:border-orange-600 text-xs font-bold rounded-lg transition-all duration-200 active:scale-95 flex items-center gap-1 shadow-sm`}
         >
           Add To Cart
         </button>
@@ -71,7 +74,7 @@ const styles = {
 
   footerRow:
     "flex justify-between items-center text-xs text-zinc-500 font-medium pt-2 border-t border-zinc-800",
-  rating: "text-emerald-400 font-bold mx-1",
+  rating: "text-emerald-400 font-bold mx-1 flex items-center gap-2",
 
   vegDotBox:
     "w-4 h-4 border-2 border-green-600 flex items-center justify-center p-0.5 mt-2 rounded-sm bg-zinc-950",
