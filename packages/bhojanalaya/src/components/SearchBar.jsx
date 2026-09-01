@@ -16,13 +16,10 @@ const SearchBar = ({ setResults }) => {
   useEffect(() => {
     const searchQuery = debouncedQuery.trim();
 
-    console.log(CUISINES, "cuisinmes");
-
     const scoredMatches = CUISINES.map((item) => {
       const nameMatch = fuzzyMatch(item.name || "", searchQuery);
       const dishMatch = fuzzyMatch(item.featuredDish || "", searchQuery);
 
-      // cuisine's logic 
       const cuisineTags = (item.cuisine || "").split(",").map(tag => tag.trim());
       const tagMatches = cuisineTags.map(tag => fuzzyMatch(tag, searchQuery));
       const anyTagMatched = tagMatches.some(match => match.matches);
@@ -30,8 +27,7 @@ const SearchBar = ({ setResults }) => {
       const validTagScores = tagMatches.filter(m => m.matches).map(m => m.score);
       const bestCuisineScore = validTagScores.length > 0 ? Math.min(...validTagScores) : Infinity;
 
-      const isMatched =
-        nameMatch.matches || anyTagMatched || dishMatch.matches;
+      const isMatched = nameMatch.matches || anyTagMatched || dishMatch.matches;
 
       const validScores = [];
       if (nameMatch.matches) validScores.push(nameMatch.score);
@@ -43,23 +39,24 @@ const SearchBar = ({ setResults }) => {
       return { item, isMatched: bestScore !== Infinity, score: bestScore };
     });
 
-    console.log(scoredMatches, "scoredMatches");
-
     const filteredAndSorted = scoredMatches
       .filter((match) => {
         if (!match.isMatched) return false;
         if (isPureVegFilter && !match.item.isPureVeg) return false;
         return true;
       })
-      .sort((a, b) => a.score - b.score) // Closest character strings jump to index position 0
+      .sort((a, b) => a.score - b.score) 
       .map((match) => match.item);
-    console.log(filteredAndSorted, "filteredAndSorted");
+
     setResults(filteredAndSorted);
   }, [debouncedQuery, isPureVegFilter]);
 
   return (
     <div className="relative w-full max-w-lg mx-auto">
+    
       <div className={styles.rowLayout}>
+        
+   
         <div className={styles.searchWrapper}>
           <div className={styles.searchIcon}>🔎</div>
           <input
@@ -85,6 +82,7 @@ const SearchBar = ({ setResults }) => {
           )}
         </div>
 
+      
         <div
           className={styles.switchWrapper}
           onClick={() => {
@@ -92,7 +90,7 @@ const SearchBar = ({ setResults }) => {
             localStorage.setItem("veg_filter_active", String(!isPureVegFilter));
           }}
         >
-          <span className={styles.switchLabel}>Veg Only</span>
+          <span className={styles.switchLabel}>Only Veg</span>
           <div
             className={`${styles.switchBg} ${isPureVegFilter ? styles.switchBgActive : styles.switchBgInactive}`}
           >
@@ -101,6 +99,7 @@ const SearchBar = ({ setResults }) => {
             />
           </div>
         </div>
+
       </div>
     </div>
   );
@@ -121,23 +120,29 @@ const CUISINES = restaurants.map((restaurant) => ({
 }));
 
 const styles = {
-  rowLayout: "flex items-center gap-3 w-full max-w-lg mx-auto",
+  
+  rowLayout: 
+    "grid grid-cols-1 gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3",
 
-  searchWrapper: "relative w-full max-w-md mx-auto",
+  searchWrapper: 
+    "relative w-full md:max-w-md mx-auto",
+    
   searchInput:
-    "w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 pl-11 pr-10 text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-orange-500 focus:ring-1 focus:ring-orange-500",
-  searchIcon: "absolute left-4 top-3.5 text-zinc-500 pointer-events-none",
+    "w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2.5 pl-11 pr-10 text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-xs sm:text-sm",
+    
+  searchIcon: "absolute left-4 top-3 text-zinc-500 pointer-events-none text-xs sm:text-sm",
   clearButton:
-    "absolute right-4 top-3.5 text-zinc-500 hover:text-zinc-300 transition text-sm cursor-pointer",
+    "absolute right-4 top-3 text-zinc-500 hover:text-zinc-300 transition text-xs sm:text-sm cursor-pointer",
 
   switchWrapper:
-    "flex items-center gap-2 select-none cursor-pointer shrink-0 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-3",
-  switchLabel: "text-xs font-semibold tracking-wide text-zinc-400 uppercase",
+    "flex items-center gap-2 select-none cursor-pointer w-full md:w-auto justify-end md:justify-start shrink-0 bg-zinc-900/40 md:bg-zinc-900 border border-zinc-800/60 md:border-zinc-800 rounded-xl px-3 py-2 md:py-2.5",
+    
+  switchLabel: "text-[10px] sm:text-xs font-semibold tracking-wide text-zinc-400 uppercase",
   switchBg:
-    "w-9 h-5 rounded-full relative transition-colors duration-200 ease-in-out",
+    "w-8 h-4.5 rounded-full relative transition-colors duration-200 ease-in-out",
   switchBgInactive: "bg-zinc-700",
   switchBgActive: "bg-green-600",
   switchDot:
-    "w-4 h-4 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-200 ease-in-out shadow-md",
-  switchDotActive: "transform translate-x-4",
+    "w-3.5 h-3.5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-200 ease-in-out shadow-md",
+  switchDotActive: "transform translate-x-3.5",
 };

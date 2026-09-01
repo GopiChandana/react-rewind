@@ -49,7 +49,6 @@ const ShoppingCart = ({
 
   useEffect(() => {
   if (checkoutStatus === "success" && cartScrollContainerRef.current) {
-    // Force container viewport window straight to bottom coordinates
     cartScrollContainerRef.current.scrollTo({
       top: cartScrollContainerRef.current.scrollHeight,
       behavior: 'smooth'
@@ -117,7 +116,7 @@ const ShoppingCart = ({
 
   return (
     <div className={styles.outerContainer}>
-      {successView !== "split" && (<RewindHistory setCheckoutStatus={setCheckoutStatus} onPlacingOrder={onPlacingOrder}/>)}
+      {(checkoutStatus === "idle" || checkoutStatus === "error") &&(<RewindHistory setCheckoutStatus={setCheckoutStatus} onPlacingOrder={onPlacingOrder}/>)}
       <div className={styles.innerContainer}>
         {checkoutStatus === "error" && (
           <div className={styles.errorCard}>
@@ -170,7 +169,7 @@ const ShoppingCart = ({
                     </div>
                     <button
                       onClick={() => setSuccessView("split")}
-                      className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition text-center border border-orange-700/20 shadow-lg shadow-orange-950/20 cursor-pointer"
+                      className="w-full py-2.5 px-0.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition text-center border border-orange-700/20 shadow-lg shadow-orange-950/20 cursor-pointer"
                     >
                       📊 Split Bill & Share via WhatsApp
                     </button>
@@ -232,7 +231,7 @@ const ShoppingCart = ({
                   </div>
                 </div>
               ))}
-              <div ref={listBottomRef} />
+              <div ref={listBottomRef} /> 
             </div>
 
             <div className={styles.breakdownBox}>
@@ -272,6 +271,7 @@ const ShoppingCart = ({
                 Proceed to Checkout
               </button>
             </div>
+            
           </>
         )}
       </div>
@@ -281,65 +281,70 @@ const ShoppingCart = ({
 
 export default ShoppingCart;
 
-const styles = {
-  outerContainer: "flex flex-col h-full min-h-0 w-full",
 
-  innerContainer: "flex flex-col flex-1 min-h-0 w-full relative",
+const styles = {
+outerContainer: "flex flex-col h-full w-full max-w-full bg-zinc-950 overflow-x-hidden overflow-y-auto lg:overflow-hidden custom-scrollbar",
+
+  innerContainer: "flex flex-col flex-1 w-full relative min-h-0 justify-between",
 
   emptyState:
-    "block text-center py-8 text-zinc-500 text-sm bg-zinc-900/30 border border-zinc-800/80 rounded-2xl w-full",
+    "block text-center py-8 text-zinc-500 text-sm bg-zinc-900/30 border border-zinc-800/80 rounded-2xl w-full mt-4 shrink-0",
 
-  dishWrapper: "flex flex-col gap-4 w-full",
+  dishWrapper: "flex flex-col gap-3.5 w-full shrink-0 lg:shrink min-h-0",
 
-  scrollList: "flex flex-col gap-3 max-h-[138px] overflow-y-auto px-1 ",
+  
+  scrollList: "flex flex-col gap-2.5 max-h-none lg:max-h-[calc(100vh-320px)] overflow-y-visible lg:overflow-y-auto px-1 custom-scrollbar w-full shrink-0 lg:shrink",
 
   dishRow:
-    "flex items-center justify-between text-sm py-1 border-b border-zinc-800/50 pb-2",
-  dishDetails: "flex flex-col",
-  dishName: "font-medium text-zinc-200",
-  dishPrice: "text-xs text-zinc-500",
+    "flex items-center justify-between text-sm py-1 border-b border-zinc-800/40 pb-2.5 shrink-0 w-full",
+  dishDetails: "flex flex-col truncate pr-2 flex-1",
+  dishName: "font-semibold text-zinc-200 text-xs sm:text-sm truncate",
+  dishPrice: "text-[10px] sm:text-xs text-zinc-500 font-mono mt-0.5",
 
   quantityContainer:
-    "flex items-center gap-2 bg-zinc-800/80 border border-zinc-700/50 rounded-lg px-2 py-1",
-  quantityButton: "text-zinc-400 hover:text-white px-1 font-bold",
-  quantity: "text-xs font-semibold text-zinc-200 w-4 text-center",
+    "flex items-center gap-1.5 bg-zinc-800/80 border border-zinc-700/50 rounded-lg p-1 shrink-0 select-none",
+  quantityButton: "text-zinc-400 hover:text-white px-1.5 font-bold cursor-pointer text-xs sm:text-sm",
+  quantity: "text-xs font-semibold text-zinc-200 w-4 text-center font-mono",
 
-  footer: "border-t border-zinc-800 pt-4 mt-2 flex flex-col gap-3",
-  totalRow: "flex justify-between items-center text-sm",
-  totalLabel: "text-zinc-400",
-  totalAmount: "text-lg font-bold text-emerald-400",
+
+  footer: "border-t border-zinc-800 pt-3 mt-5 lg:mt-auto flex flex-col gap-2.5 shrink-0 w-full bg-zinc-950/20 p-1 rounded-xl",
+  totalRow: "flex justify-between items-center text-xs sm:text-sm px-0.5 pt-1 border-t border-dashed border-zinc-800/60 mt-1",
+  totalLabel: "text-zinc-400 font-bold uppercase tracking-wider text-[9px] sm:text-[10px]",
+  totalAmount: "text-sm sm:text-base font-black text-emerald-400 font-mono",
   checkoutButton:
-    "w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] transition-all text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-950/20 cursor-pointer",
+    "w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] transition-all text-white text-xs font-black tracking-wider uppercase rounded-xl shadow-lg shadow-emerald-950/20 cursor-pointer text-center flex items-center justify-center",
+
 
   errorCard:
-    "bg-zinc-900/50 border border-red-900/50 p-5 rounded-2xl flex flex-col items-center text-center gap-2",
+    "bg-zinc-900/40 border border-red-900/40 p-4 rounded-xl flex flex-col items-center text-center gap-2 max-w-sm mx-auto",
   errorIcon:
-    "text-red-400 bg-red-950/40 border border-red-800/50 w-12 h-12 flex items-center justify-center rounded-full text-sm font-bold mb-1",
-  errorTitle: "text-base font-bold text-red-400",
-  errorMessage: "text-xs text-zinc-400 max-w-[210px] leading-relaxed",
+    "text-red-400 bg-red-950/40 border border-red-800/40 w-10 h-10 flex items-center justify-center rounded-full text-xs font-bold shrink-0",
+  errorTitle: "text-sm font-bold text-red-400",
+  errorMessage: "text-[11px] text-zinc-400 max-w-[200px] leading-relaxed",
   retryButton:
-    "w-full mt-2 py-2 bg-red-950/30 hover:bg-red-950/50 border border-red-900/50 rounded-xl text-xs font-semibold text-red-200 transition-all cursor-pointer",
+    "w-full mt-1.5 py-2 bg-red-950/30 hover:bg-red-950/50 border border-red-900/40 rounded-xl text-xs font-bold text-red-200 transition-all cursor-pointer text-center",
 
-  receiptCard:
-    "bg-zinc-900/50 border border-zinc-800 p-5 rounded-2xl flex flex-col items-center text-center gap-2",
+
+  receiptCard:"bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-2xl flex flex-col items-center text-center gap-2 w-full max-w-sm mx-auto overflow-y-auto lg:overflow-hidden custom-scrollbar",
   successIcon:
-    "text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 w-7 h-7 flex items-center justify-center rounded-full text-md font-bold mb-1",
-  receiptTitle: "text-base font-bold text-zinc-100",
+    "text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold shrink-0",
+  receiptTitle: "text-sm font-bold text-zinc-100",
   receiptMessage:
-    "text-xs text-zinc-500 max-w-[200px] leading-relaxed font-bold",
+    "text-[11px] text-zinc-500 max-w-[190px] leading-relaxed font-semibold",
+    //here
   receiptSummary:
-    "w-full border-t border-b border-zinc-800/80 my-2 py-3 flex flex-col gap-2 text-xs text-zinc-400",
-  receiptItem: "flex justify-between items-center w-full",
+    "w-full border-t border-b border-zinc-800/60 my-1 py-2 flex flex-col gap-1.5 text-xs text-zinc-400 max-h-none overflow-y-auto custom-scrollbar",
+  receiptItem: "flex justify-between items-center w-full font-mono text-[11px]",
   receiptItemWrapper: "flex items-center gap-1.5 min-w-0 flex-1 pr-2",
-  receiptItemName: "truncate",
-  receiptItemQuantity: "text-neutral-400 shrink-0",
-  receiptItemPrice: "font-bold shrink-0 text-right",
+  receiptItemName: "truncate text-zinc-300 font-sans",
+  receiptItemQuantity: "text-zinc-500 shrink-0",
+  receiptItemPrice: "font-bold shrink-0 text-right text-zinc-300",
   receiptTotalRow:
-    "flex justify-between items-center font-bold text-zinc-200 border-t border-zinc-800/50 pt-2 mt-1",
+    "flex justify-between items-center font-bold text-zinc-200 border-t border-zinc-800/60 pt-2 mt-1 w-full text-xs",
   doneButton:
-    "w-full py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-xs font-semibold text-zinc-200 transition-all cursor-pointer",
+    "w-full py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-xs font-bold text-zinc-300 transition-all cursor-pointer text-center",
 
   breakdownBox:
-    "flex flex-col gap-2 bg-zinc-950/40 border border-zinc-900 rounded-xl p-3 text-xs text-zinc-400",
+    "flex flex-col gap-1.5 bg-zinc-950/40 border border-zinc-900 rounded-xl p-2.5 text-[10px] sm:text-xs text-zinc-500 font-medium font-mono shrink-0 w-full",
   breakdownRow: "flex justify-between items-center",
 };

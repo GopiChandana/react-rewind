@@ -20,7 +20,7 @@ const styles = {
   
   sidebar: (isMobileCartOpen) => `
     ${isMobileCartOpen ? "flex flex-col" : "hidden"} 
-    lg:flex lg:flex-col w-full lg:w-85 lg:shrink-0 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5 h-full min-h-0
+    lg:flex lg:flex-col lg:w-85 lg:shrink-0 bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-5 h-full min-h-0 max-w-full overflow-x-hidden
   `
 };
 
@@ -52,9 +52,9 @@ function App() {
               </button>
             )}
 
-            <h3 className="text-sm font-bold tracking-wider text-zinc-400 uppercase mb-4 text-center shrink-0">
+             {/* <h1 className="text-sm font-bold tracking-wider text-zinc-400 uppercase mb-4 text-center shrink-0">
               Your Cart
-            </h3>
+            </h1>  */}
 
             <ShoppingCart
               onSuccessfulOrder={() => setIsMobileCartOpen(false)}

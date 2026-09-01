@@ -266,12 +266,13 @@ export default function BillSplitter({
                 <span>
                   Max Order Qty: {item.quantity} × ₹{item.price}
                 </span>
-                {poolRemaining > 0 && (
+                
+              </div>
+              {poolRemaining > 0 && (
                   <span className={styles.portionsLeftBadge}>
                     ({poolRemaining} left)
                   </span>
                 )}
-              </div>
             </div>
 
       
@@ -355,23 +356,26 @@ export default function BillSplitter({
 
 
 const styles = {
-  container: "flex flex-col h-full min-h-0 justify-between w-full relative text-zinc-100",
+  container: "flex flex-col h-full min-h-0 justify-between w-full relative text-zinc-100 overflow-y-auto lg:overflow-hidden custom-scrollbar",
 
   headerSection: "flex flex-col gap-1.5 pb-2.5 border-b border-zinc-800 shrink-0 w-full",
   headerLabel: "text-[10px] uppercase font-black text-orange-400 tracking-wider",
 
-  inputRow: "flex gap-2 w-full mt-0.5",
-  friendInput: "bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-1.5 text-xs flex-1 text-zinc-200 focus:outline-none focus:border-zinc-700 font-sans",
-  addButton: "bg-zinc-800 hover:bg-zinc-700 px-3 rounded-xl text-xs font-bold transition cursor-pointer text-zinc-300",
+  inputRow: "flex flex-col sm:flex-row gap-2 w-full mt-0.5",
 
-  friendsScrollContainer: "flex gap-1.5 overflow-x-auto py-2.5 border-b border-zinc-800/40 shrink-0 custom-scrollbar max-w-full items-center",
-  friendTabBase: "px-2.5 py-1 rounded-xl text-[10px] font-bold transition cursor-pointer shrink-0 flex items-center gap-1.5 border group",
+  friendInput: "bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs w-full sm:flex-1 text-zinc-200 outline-none focus:border-zinc-700 font-sans shadow-inner placeholder:text-zinc-700 shrink-0",
+
+  addButton: "w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-1.5 rounded-xl text-xs font-black tracking-wide uppercase transition duration-150 cursor-pointer text-center flex items-center justify-center shrink-0 shadow-md shadow-black/10",
+
+ friendsScrollContainer: "flex flex-wrap lg:flex-nowrap gap-1.5 overflow-y-visible lg:overflow-x-auto py-2.5 border-b border-zinc-800/40 shrink-0 custom-scrollbar max-w-full items-center px-1 w-full min-h-0",
+ friendTabBase: "px-2.5 py-1 rounded-xl text-[10px] font-bold transition cursor-pointer shrink-0 flex items-center gap-1.5 border group select-none min-h-6",
+
   friendTabActive: "bg-orange-500/10 border-orange-500 text-orange-400",
   friendTabInactive: "bg-zinc-950/40 border-zinc-800/60 text-zinc-500 hover:text-zinc-400",
   deleteFriendIcon: "text-[9px] text-zinc-600 hover:text-red-400 transition font-mono px-0.5",
 
 
-  allocationList: "flex-1 min-h-0 overflow-y-auto custom-scrollbar flex flex-col gap-2 py-3 pr-1",
+  allocationList: "flex-1 min-h-40 overflow-y-auto custom-scrollbar flex flex-col gap-2 py-3 pr-1",
   allocationInstruction: "text-[9px] uppercase tracking-wider text-zinc-500 font-bold mb-1",
   activeFriendHighlight: "text-orange-400 font-black",
 
@@ -382,7 +386,7 @@ const styles = {
   itemNameClaimed: "text-xs font-semibold truncate text-zinc-200",
   itemNameUnclaimed: "text-xs font-semibold truncate text-zinc-400",
   itemPriceMeta: "flex items-center gap-1.5 text-[9px] text-zinc-500 font-mono",
-  portionsLeftBadge: "text-emerald-500 font-sans font-bold",
+  portionsLeftBadge: "text-emerald-500 font-sans font-bold text-[9px]",
 
 
   stepperContainer: "flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-lg p-1 shrink-0",

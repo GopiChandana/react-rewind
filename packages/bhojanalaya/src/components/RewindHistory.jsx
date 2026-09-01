@@ -3,10 +3,10 @@ import { useCart } from "../hooks/useCart";
 
 const styles = {
   rewindContainer:
-    "bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-4 mb-5 text-xs w-full",
+    "bg-zinc-900/60 border border-zinc-800/80 rounded-2xl lg:p-4 lg:mb-5 p-2 mb-2 text-xs w-full",
   rewindFunctionHeader:
-    "flex flex-col gap-2.5 pb-3 border-b border-zinc-800/60 mb-3 w-full items-stretch",
-  tabContainer: "flex items-center justify-end gap-4 w-full border-b border-zinc-800/20 pb-1",
+    "flex flex-col gap-2.5 pb-1 lg:pb-3  border-b border-zinc-800/60 mb-1 lg:mb-3 w-full items-center",
+  tabContainer: "flex items-center justify-center gap-4 w-full border-b border-zinc-800/20 pb-1",
 
   tabButton: (isActive) =>
     `font-bold tracking-wider uppercase text-[10px] pb-1 cursor-pointer transition relative ${
@@ -15,11 +15,11 @@ const styles = {
         : "text-zinc-500 hover:text-zinc-400"
     }`,
 
-  actionRow: "flex items-center justify-around w-full pt-0.5 min-h-6",
+actionRow: "flex items-center justify-between w-full pt-1 px-1 lg:min-h-6 lg:px-0 gap-3",
   resetButton:
-    "text-[10px] text-zinc-500 hover:text-red-400 font-bold tracking-wide transition cursor-pointer bg-zinc-950/40 border border-zinc-800/60  rounded-md px-2 py-0.5 hover:bg-zinc-800/40 shrink-0 mt-[7px]",
+    "text-[10px] text-zinc-500 hover:text-red-400 font-bold tracking-wide transition cursor-pointer bg-zinc-950/40 border border-zinc-800/60  rounded-md px-2 py-0.5 hover:bg-zinc-800/40 shrink-0",
 
-  rewindButtonControlGroup: "flex items-center justify-evenly w-full ml-auto shrink-0 pt-1.5",
+  rewindButtonControlGroup: "flex items-center shrink-0 gap-3 text-[10px] font-bold text-zinc-500 select-none",
   rewindButtonControlButton: (isEnabled) =>
     `px-2 py-0.5 rounded-md text-[10px] font-medium transition duration-150 border  ${
       isEnabled
@@ -28,7 +28,7 @@ const styles = {
     }`,
 
   scrollWrapper:
-    "max-h-12 overflow-y-auto pr-1 flex flex-col gap-2 relative border-l border-zinc-800 pl-3 ml-1.5 custom-scrollbar",
+    "max-h-25 overflow-y-auto pr-1 flex flex-col gap-2 relative border-l border-zinc-800 pl-3 ml-1.5 custom-scrollbar",
 
   timelineItem: (isActive, isPast) =>
     `text-left group flex items-center justify-between py-1 transition cursor-pointer w-full rounded-lg px-2 -ml-2 ${

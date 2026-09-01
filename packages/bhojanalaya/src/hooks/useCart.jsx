@@ -102,19 +102,19 @@ export function CartProvider({ children }) {
       const cleanTimeline = timeline.slice(0, currentIndex + 1);
       const nextCartState = addItemToCart(cart, dish);
 
-      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Added ${dish.name}` }]);
+      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Added ${dish.featuredDish}` }]);
       setCurrentIndex(cleanTimeline.length);
       
       // Append permanently to absolute audit ledger
       setAuditStream(prev => [
         ...prev,
-        { timestamp: new Date().toLocaleTimeString(), text: `➕ Added ${dish.name} to cart` }
+        { timestamp: new Date().toLocaleTimeString(), text: `➕ Added ${dish.featuredDish} to cart` }
       ]);
 
       localStorage.setItem("bhojan_cart_sync_packet", JSON.stringify({
       cart: nextCartState,
-      actionLabel: `Added ${dish.name}`,
-      auditText: `➕ Added ${dish.name} to cart`,
+      actionLabel: `Added ${dish.featuredDish}`,
+      auditText: `➕ Added ${dish.featuredDish} to cart`,
       timestamp: new Date().toLocaleTimeString()
     }));
     // });
@@ -126,18 +126,18 @@ export function CartProvider({ children }) {
       const cleanTimeline = timeline.slice(0, currentIndex + 1);
       const nextCartState = removeItemFromCart(cart, dish);
 
-      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Removed ${dish.name}` }]);
+      setTimeline([...cleanTimeline, { cart: nextCartState, actionLabel: `Removed ${dish.featuredDish}` }]);
       setCurrentIndex(cleanTimeline.length);
       
       setAuditStream(prev => [
         ...prev,
-        { timestamp: new Date().toLocaleTimeString(), text: `➖ Removed ${dish.name} from cart` }
+        { timestamp: new Date().toLocaleTimeString(), text: `➖ Removed ${dish.featuredDish} from cart` }
       ]);
 
       localStorage.setItem("bhojan_cart_sync_packet", JSON.stringify({
       cart: nextCartState,
-      actionLabel: `Removed ${dish.name}`,
-      auditText: `➖ Removed ${dish.name} from cart`,
+      actionLabel: `Removed ${dish.featuredDish}`,
+      auditText: `➖ Removed ${dish.featuredDish} from cart`,
       timestamp: new Date().toLocaleTimeString()
     }));
     // });
