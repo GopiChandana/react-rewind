@@ -6,7 +6,7 @@ const styles = {
     "bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-4 mb-5 text-xs w-full",
   rewindFunctionHeader:
     "flex flex-col gap-2.5 pb-3 border-b border-zinc-800/60 mb-3 w-full items-stretch",
-  tabContainer: "flex items-center justify-around gap-4 w-full border-b border-zinc-800/20 pb-1",
+  tabContainer: "flex items-center justify-end gap-4 w-full border-b border-zinc-800/20 pb-1",
 
   tabButton: (isActive) =>
     `font-bold tracking-wider uppercase text-[10px] pb-1 cursor-pointer transition relative ${
@@ -28,7 +28,7 @@ const styles = {
     }`,
 
   scrollWrapper:
-    "max-h-25 overflow-y-auto pr-1 flex flex-col gap-2 relative border-l border-zinc-800 pl-3 ml-1.5 custom-scrollbar",
+    "max-h-12 overflow-y-auto pr-1 flex flex-col gap-2 relative border-l border-zinc-800 pl-3 ml-1.5 custom-scrollbar",
 
   timelineItem: (isActive, isPast) =>
     `text-left group flex items-center justify-between py-1 transition cursor-pointer w-full rounded-lg px-2 -ml-2 ${
@@ -60,7 +60,7 @@ const styles = {
     "text-zinc-400 break-words leading-relaxed pl-1 bg-zinc-900/20 rounded p-1 border border-zinc-800/30 font-mono text-[10px]",
 };
 
-export default function RewindHistory({ isCartEmpty }) {
+export default function RewindHistory({ isCartEmpty,setCheckoutStatus,onPlacingOrder }) {
   const {
     timeline,
     currentIndex,
@@ -103,13 +103,13 @@ export default function RewindHistory({ isCartEmpty }) {
             onClick={() => setActiveTab("audit")}
             className={styles.tabButton(activeTab === "audit")}
           >
-            📜 Audit Ledger
+            📜 Food Ledger
           </button>
         </div>
 
         <div className={styles.actionRow}>
           <button
-            onClick={resetSession}
+            onClick={()=> resetSession(setCheckoutStatus,onPlacingOrder)}
             title="Reset Session Data"
             className={styles.resetButton}
           >

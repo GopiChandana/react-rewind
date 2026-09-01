@@ -53,19 +53,45 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     const syncCartDataAcrossTabs = (e) => {
-      if (e.key === "bhojan_cart_items") {
-        const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
-        setTimeline([{ cart: updatedCart, actionLabel: "Tabs Synchronized" }]);
-        setCurrentIndex(0);
+      // if (e.key === "bhojan_cart_items") {
+      //   const updatedCart = e.newValue ? JSON.parse(e.newValue) : [];
+      //   setTimeline([{ cart: updatedCart, actionLabel: "Tabs Synchronized" }]);
+      //   setCurrentIndex(0);
+      //   setAuditStream(prev => [
+      //     ...prev,
+      //     { timestamp: new Date().toLocaleTimeString(), text: "Cart synced across browser tabs" }
+      //   ]);
+      // }
+
+      if (e.key === "bhojan_cart_sync_packet" && e.newValue) {
+        const packet = JSON.parse(e.newValue);
+        
+        // 1. Slice past timeline and append the EXACT action label from the other tab
+        const cleanTimeline = timeline.slice(0, currentIndex + 1);
+        setTimeline([...cleanTimeline, { cart: packet.cart, actionLabel: packet.actionLabel }]);
+        setCurrentIndex(cleanTimeline.length);
+        
+        // 2. Append the EXACT audit ledger log text sent from the other tab
         setAuditStream(prev => [
           ...prev,
-          { timestamp: new Date().toLocaleTimeString(), text: "Cart synced across browser tabs" }
+          { timestamp: packet.timestamp, text: packet.auditText }
+        ]);
+      }
+
+      if (e.key === "bhojan_session_reset_trigger") {
+        setTimeline([{ cart: [], actionLabel: "Session started" }]);
+        setCurrentIndex(0);
+        setAuditStream([
+          { 
+            timestamp: new Date().toLocaleTimeString(), 
+            text: "Session reset via alternate tab broadcast" 
+          }
         ]);
       }
     };
     window.addEventListener("storage", syncCartDataAcrossTabs);
     return () => window.removeEventListener("storage", syncCartDataAcrossTabs);
-  }, []);
+  }, [timeline,currentIndex]);
 
   useEffect(() => {
     localStorage.setItem("bhojan_cart_items", JSON.stringify(cart));
@@ -84,6 +110,13 @@ export function CartProvider({ children }) {
         ...prev,
         { timestamp: new Date().toLocaleTimeString(), text: `➕ Added ${dish.name} to cart` }
       ]);
+
+      localStorage.setItem("bhojan_cart_sync_packet", JSON.stringify({
+      cart: nextCartState,
+      actionLabel: `Added ${dish.name}`,
+      auditText: `➕ Added ${dish.name} to cart`,
+      timestamp: new Date().toLocaleTimeString()
+    }));
     // });
   };
 
@@ -100,6 +133,13 @@ export function CartProvider({ children }) {
         ...prev,
         { timestamp: new Date().toLocaleTimeString(), text: `➖ Removed ${dish.name} from cart` }
       ]);
+
+      localStorage.setItem("bhojan_cart_sync_packet", JSON.stringify({
+      cart: nextCartState,
+      actionLabel: `Removed ${dish.name}`,
+      auditText: `➖ Removed ${dish.name} from cart`,
+      timestamp: new Date().toLocaleTimeString()
+    }));
     // });
   };
 
@@ -114,6 +154,12 @@ export function CartProvider({ children }) {
         ...prev,
         { timestamp: new Date().toLocaleTimeString(), text: "🗑️ Cleared all items from cart" }
       ]);
+      localStorage.setItem("bhojan_cart_sync_packet", JSON.stringify({
+      cart: [],
+      actionLabel: "Cart cleared",
+      auditText: "🗑️ Cleared all items from cart" ,
+      timestamp: new Date().toLocaleTimeString()
+    }));
     });
   };
 
@@ -151,12 +197,15 @@ export function CartProvider({ children }) {
     });
   };
 
-  const resetSession = () => {
+  const resetSession = (statusTrigger,orderPlacedTrigger) => {
   
     localStorage.removeItem("bhojan_cart_items");
     localStorage.removeItem("bhojan_checkout_status");
 
-    
+    localStorage.setItem("bhojan_session_reset_trigger", Date.now().toString());
+
+    if (typeof statusTrigger === "function") statusTrigger("idle");
+    if (typeof orderPlacedTrigger === "function") orderPlacedTrigger(false);
     setTimeline([{ cart: [], actionLabel: "Session started" }]);
     setCurrentIndex(0);
 

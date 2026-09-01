@@ -1,9 +1,1 @@
 @import "tailwindcss";
-
-/*
-Main Background Layer: bg-zinc-950 (Deepest canvas)
-Card/Surface Container: bg-zinc-900 with border border-zinc-800
-Primary Active Action Color: bg-orange-500 (The classic appetizing saffron trigger)
-Secondary Safe Highlight: text-amber-500 (Great for star ratings, price tags, and discounts)
-Main Readable Typography: text-zinc-100 (Soft off-white for crisp, readable text)
-*/

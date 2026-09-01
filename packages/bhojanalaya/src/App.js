@@ -29,6 +29,7 @@ function App() {
   const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
   const [successfulOrderPlaced, setSuccessfulOrderPlaced] = useState(false);
   const [minimumOrderPlaced, setMinimumOrderPlaced] = useState(false);
+  const [successView, setSuccessView] = useState("receipt"); // "receipt" /"split"
 
   return (
     <CartProvider>
@@ -42,7 +43,7 @@ function App() {
           </main>
 
           <aside className={styles.sidebar(isMobileCartOpen)}>
-            {!minimumOrderPlaced && (
+            {!minimumOrderPlaced && successView !== "split" && (
               <button
                 onClick={() => setIsMobileCartOpen(false)}
                 className="lg:hidden mb-4 text-md text-zinc-500 hover:text-white self-start cursor-pointer"
@@ -59,6 +60,8 @@ function App() {
               onSuccessfulOrder={() => setIsMobileCartOpen(false)}
               onPlacingOrder={(val) => setSuccessfulOrderPlaced(val)}
               minimumOrderPlaced={(val) => setMinimumOrderPlaced(val)}
+              successView={successView}
+              setSuccessView={(val)=>setSuccessView(val)}
             />
           </aside>
         </div>

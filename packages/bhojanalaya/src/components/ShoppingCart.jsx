@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useCart } from "../hooks/useCart";
 import { useTabSync } from "../hooks/useTabSync";
 import RewindHistory from "./RewindHistory";
+import BillSplitter from "./BillSplitter";
 
 const ShoppingCart = ({
   onSuccessfulOrder,
   onPlacingOrder,
   minimumOrderPlaced,
+  successView,
+  setSuccessView
 }) => {
   const {
     cart,
@@ -23,6 +26,17 @@ const ShoppingCart = ({
 
   const [checkoutStatus, setCheckoutStatus] = useState("idle");
   const listBottomRef = useRef(null);
+  const cartScrollContainerRef = useRef(null);
+  const [receiptSnapshot, setReceiptSnapshot] = useState(() => {
+    const savedSnapshot = localStorage.getItem("bhojan_receipt_snapshot");
+    return savedSnapshot ? JSON.parse(savedSnapshot) : [];
+  });
+
+  const [receiptTotalSnapshot, setReceiptTotalSnapshot] = useState(() => {
+    const savedTotal = localStorage.getItem("bhojan_receipt_total");
+    return savedTotal ? Number(savedTotal) : 0;
+  });
+
   useTabSync("bhojan_checkout_status", (newStatus) => {
     if (newStatus) setCheckoutStatus(newStatus);
   });
@@ -33,6 +47,27 @@ const ShoppingCart = ({
     }
   }, [cart.length]);
 
+  useEffect(() => {
+  if (checkoutStatus === "success" && cartScrollContainerRef.current) {
+    // Force container viewport window straight to bottom coordinates
+    cartScrollContainerRef.current.scrollTo({
+      top: cartScrollContainerRef.current.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+}, [checkoutStatus]);
+
+  useEffect(() => {
+    const handleTabReset = (e) => {
+      if (e.key === "bhojan_session_reset_trigger") {
+        setCheckoutStatus("idle");
+      }
+    };
+    window.addEventListener("storage", handleTabReset);
+    return () => window.removeEventListener("storage", handleTabReset);
+  }, []);
+
+
   const handleCheckout = () => {
     console.log("Processing Cart Request...");
     if (totalPrice < 250) {
@@ -40,10 +75,16 @@ const ShoppingCart = ({
       minimumOrderPlaced(true);
       localStorage.setItem("bhojan_checkout_status", "error");
     } else {
+      setReceiptSnapshot([...cart]);
+      setReceiptTotalSnapshot(totalPrice);
+      localStorage.setItem("bhojan_receipt_snapshot", JSON.stringify(cart));
+      localStorage.setItem("bhojan_receipt_total", totalPrice.toString());
+      setSuccessView("receipt");
       setCheckoutStatus("success");
       onPlacingOrder(true);
       minimumOrderPlaced(false);
       localStorage.setItem("bhojan_checkout_status", "success");
+      
     }
   };
 
@@ -51,6 +92,10 @@ const ShoppingCart = ({
     setCheckoutStatus("idle");
     localStorage.setItem("bhojan_checkout_status", "idle");
     clearCart();
+    
+    localStorage.removeItem("bhojan_receipt_snapshot");
+    localStorage.removeItem("bhojan_receipt_total");
+
     onSuccessfulOrder();
     onPlacingOrder(false);
   };
@@ -63,23 +108,17 @@ const ShoppingCart = ({
 
   if (cart.length === 0) {
     return (
-    
       <div className={styles.outerContainer}>
-        <RewindHistory isCartEmpty={cart?.length || 0}/>
-        <div className={styles.emptyState}>
-          Your cart is completely empty.
-        </div>
+        <RewindHistory isCartEmpty={cart?.length || 0} setCheckoutStatus={setCheckoutStatus} onPlacingOrder={onPlacingOrder}/>
+        <div className={styles.emptyState}>Your cart is completely empty.</div>
       </div>
-      
     );
   }
 
   return (
     <div className={styles.outerContainer}>
-      <RewindHistory />
-      <div
-        className={styles.innerContainer}
-      >
+      {successView !== "split" && (<RewindHistory setCheckoutStatus={setCheckoutStatus} onPlacingOrder={onPlacingOrder}/>)}
+      <div className={styles.innerContainer}>
         {checkoutStatus === "error" && (
           <div className={styles.errorCard}>
             <div className={styles.errorIcon}>✕</div>
@@ -95,49 +134,76 @@ const ShoppingCart = ({
         )}
 
         {checkoutStatus === "success" && (
-          <div className={styles.receiptCard}>
-       
-            <div className={styles.successIcon}>✓</div>
-            <h5 className={styles.receiptTitle}>Order Placed!</h5>
-            <h6 className={styles.receiptMessage}>
-              REQUEST SENT TO KITCHEN
-            </h6>
-            <div className={styles.scrollList}>
-              <div className={styles.receiptSummary}>
-                {cart.map((item) => (
-                  <div key={item.id} className={styles.receiptItem}>
-                    <div className={styles.receiptItemWrapper}>
-                      <span className={styles.receiptItemName}>
-                        {item.featuredDish}
+          <>
+            {successView === "receipt" && (
+              <div className={styles.receiptCard}>
+                <div className={styles.successIcon}>✓</div>
+                <h5 className={styles.receiptTitle}>Order Placed!</h5>
+                <h6 className={styles.receiptMessage}>
+                  REQUEST SENT TO KITCHEN
+                </h6>
+                <div ref={cartScrollContainerRef} className={styles.scrollList}>
+                  <div className={styles.receiptSummary}>
+                    {cart.map((item) => (
+                      <div key={item.id} className={styles.receiptItem}>
+                        <div className={styles.receiptItemWrapper}>
+                          <span className={styles.receiptItemName}>
+                            {item.featuredDish}
+                          </span>
+                          <span className={styles.receiptItemQuantity}>
+                            × {item.quantity}
+                          </span>
+                        </div>
+                        <span className={styles.receiptItemPrice}>
+                          ₹{item.price * item.quantity}
+                        </span>
+                      </div>
+                    ))}
+                    <div className={styles.receiptDivider} />
+                    <div className={styles.receiptItem}>
+                      <span className="text-zinc-500 shrink-0 font-medium pr-2">
+                        Paid Via
                       </span>
-                      <span className={styles.receiptItemQuantity}>
-                        × {item.quantity}
+                      <span className="text-zinc-300 font-medium">
+                        Pay on Delivery (Cash/UPI)
                       </span>
                     </div>
-                    <span className={styles.receiptItemPrice}>
-                      ₹{item.price * item.quantity}
-                    </span>
+                    <button
+                      onClick={() => setSuccessView("split")}
+                      className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold transition text-center border border-orange-700/20 shadow-lg shadow-orange-950/20 cursor-pointer"
+                    >
+                      📊 Split Bill & Share via WhatsApp
+                    </button>
+                    <div className={styles.receiptTotalRow}>
+                      <span>Amount Due On Delivery :</span>
+                      <span className="text-emerald-400">₹{totalPrice}</span>
+                    </div>
+                    
                   </div>
-                ))}
-                <div className={styles.receiptDivider} />
-                <div className={styles.receiptItem}>
-                  <span className="text-zinc-500 shrink-0 font-medium pr-2">
-                    Paid Via
-                  </span>
-                  <span className="text-zinc-300 font-medium">
-                    Pay on Delivery (Cash/UPI)
-                  </span>
                 </div>
-                <div className={styles.receiptTotalRow}>
-                  <span>Amount Due On Delivery :</span>
-                  <span className="text-emerald-400">₹{totalPrice}</span>
-                </div>
+               
+                <button
+                  onClick={handleSuccessDone}
+                  className={styles.doneButton}
+                >
+                  Done
+                </button>
+                
               </div>
-            </div>
-            <button onClick={handleSuccessDone} className={styles.doneButton}>
-              Done
-            </button>
-          </div>
+            )}
+            {successView === "split" && (
+              <BillSplitter
+                receiptSnapshot={receiptSnapshot}
+                receiptTotalSnapshot={receiptTotalSnapshot}
+                onBack={() => setSuccessView("receipt")}
+                onDone={handleSuccessDone}
+                gstFee={gstFee}
+                deliveryFee={deliveryFee}
+                subtotalPrice={subtotalPrice}
+                platformFee={platformFee}
+              />
+            )}
+          </>
         )}
 
         {checkoutStatus === "idle" && cart.length > 0 && (
@@ -220,11 +286,12 @@ const styles = {
 
   innerContainer: "flex flex-col flex-1 min-h-0 w-full relative",
 
-  emptyState: "block text-center py-8 text-zinc-500 text-sm bg-zinc-900/30 border border-zinc-800/80 rounded-2xl w-full",
+  emptyState:
+    "block text-center py-8 text-zinc-500 text-sm bg-zinc-900/30 border border-zinc-800/80 rounded-2xl w-full",
 
   dishWrapper: "flex flex-col gap-4 w-full",
 
-  scrollList: "flex flex-col gap-3 max-h-[138px] overflow-y-auto pr-1 ",
+  scrollList: "flex flex-col gap-3 max-h-[138px] overflow-y-auto px-1 ",
 
   dishRow:
     "flex items-center justify-between text-sm py-1 border-b border-zinc-800/50 pb-2",
@@ -258,7 +325,8 @@ const styles = {
   successIcon:
     "text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 w-7 h-7 flex items-center justify-center rounded-full text-md font-bold mb-1",
   receiptTitle: "text-base font-bold text-zinc-100",
-  receiptMessage: "text-xs text-zinc-500 max-w-[200px] leading-relaxed font-bold",
+  receiptMessage:
+    "text-xs text-zinc-500 max-w-[200px] leading-relaxed font-bold",
   receiptSummary:
     "w-full border-t border-b border-zinc-800/80 my-2 py-3 flex flex-col gap-2 text-xs text-zinc-400",
   receiptItem: "flex justify-between items-center w-full",
