@@ -18,10 +18,7 @@
     "packages/*"
   ],
   "scripts": {
-   "start:bhojanalaya": "npm start --workspace=packages/bhojanalaya",
-    "start:kathavedika": "npm start --workspace=packages/kathavedika",
-    "start:soulswipe": "npm start --workspace=packages/soulswipe",
-    "start:streamVault": "npm start --workspace=packages/streamVault"
+   "start:bhojanalaya": "npm start --workspace=packages/bhojanalaya"
   }
  
 }

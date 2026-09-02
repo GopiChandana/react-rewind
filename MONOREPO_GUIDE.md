@@ -31,23 +31,13 @@ react-rewind/                  <-- Project Root (Manager)
     │   ├── public/            
     │   └── src/               # React components & styles
     │
-    ├── kathavedika/           <-- App 2: The Story Stage
+    ├── Web Performance Analyzer/           <-- App 2: The Performance Analyzer
     │   ├── package.json       
     │   ├── index.html         
     │   ├── public/            
     │   └── src/               
     │
-    ├── soulswipe/             <-- App 3: Discovery & Match
-    │   ├── package.json       
-    │   ├── index.html         
-    │   ├── public/            
-    │   └── src/               
-    │
-    └── streamVault/           <-- App 4: OTT Video Streaming
-        ├── package.json       
-        ├── index.html         
-        ├── public/            
-        └── src/               
+       
 ```
 
 ---
@@ -65,9 +55,6 @@ react-rewind/                  <-- Project Root (Manager)
   ],
   "scripts": {
     "start:bhojanalaya": "npm start --workspace=packages/bhojanalaya",
-    "start:kathavedika": "npm start --workspace=packages/kathavedika",
-    "start:soulswipe": "npm start --workspace=packages/soulswipe",
-    "start:streamVault": "npm start --workspace=packages/streamVault"
   }
 }
 ```
@@ -105,7 +92,6 @@ All 4 apps use this clean configuration structure. Each app manages its own targ
   }
 }
 ```
-*(Note: Change the `"name"` property to match the exact folder name for `kathavedika`, `soulswipe`, or `streamVault` respectively).*
 
 ---
 
@@ -129,14 +115,6 @@ You never need to navigate (`cd`) deep into application subfolders to run develo
 # To run Food Delivery Based Application
 npm run start:bhojanalaya
 
-# To run Video Stream Based Application
-npm run start:kathavedika
-
-# To run Dating Idea Based Application
-npm run start:soulswipe
-
-# To run Movie Library Based Application
-npm run start:streamVault
 ```
 
 ### 3. Asset & Resource Scope Isolation
