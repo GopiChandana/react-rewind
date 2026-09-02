@@ -2,20 +2,23 @@
   "name": "bhojanalaya",
   "version": "1.0.0",
   "private": true,
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@react-rewind/shared-utils": "*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3",
-    "@react-rewind/shared-utils": "*"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
-    "parcel": "^2.16.4"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "parcel": "^2.16.4",
+    "typescript": "^7.0.2"
   },
   "browserslist": [
     "> 0.2%",

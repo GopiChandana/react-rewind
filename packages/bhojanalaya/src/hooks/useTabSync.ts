@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 
-export const useTabSync = (storageKey, callback) => {
+export const useTabSync = (
+  storageKey: string,
+  callback: (value: string) => void,
+) => {
   const callbackRef = useRef(callback);
 
   useEffect(() => {
@@ -13,7 +16,7 @@ export const useTabSync = (storageKey, callback) => {
       callbackRef.current(initialValue);
     }
 
-    const handleTabChanges = (event) => {
+    const handleTabChanges = (event: StorageEvent) => {
       if (event.key === storageKey) {
         const newValue = event.newValue ?? "";
         callbackRef.current(newValue);

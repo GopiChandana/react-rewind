@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    /* 1. Core Framework Setup */
+    "target": "es2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "jsx": "react-jsx",
+    
+    /* 2. Parcel Bundler Integration */
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "allowArbitraryExtensions": true,
+    
+    /* 3. Safe Gradual JavaScript Migration */
+    "allowJs": true,
+    "checkJs": false,
+
+    /* 4. Strict Type Safety Settings (Kept from your initial code) */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    
+    /* 5. Monorepo Performance Options */
+    "noEmit": true
+  },
+  "include": ["src"]
+}

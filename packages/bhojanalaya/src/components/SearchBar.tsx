@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { restaurants } from "../restaurantData";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Restaurant, restaurants } from "../restaurantData";
 import { useDebounce } from "../hooks/useDebounce";
 import { useTabSync } from "../hooks/useTabSync";
 import { fuzzyMatch } from "../utils/fuzzyMatch";
 
-const SearchBar = ({ setResults }) => {
+interface SearchBarProps {
+  setResults: Dispatch<SetStateAction<Restaurant[]>>;
+}
+const SearchBar = ({ setResults }: SearchBarProps) => {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isPureVegFilter, setIsPureVegFilter] = useState(false);
@@ -20,21 +23,25 @@ const SearchBar = ({ setResults }) => {
       const nameMatch = fuzzyMatch(item.name || "", searchQuery);
       const dishMatch = fuzzyMatch(item.featuredDish || "", searchQuery);
 
-      const cuisineTags = (item.cuisine || "").split(",").map(tag => tag.trim());
-      const tagMatches = cuisineTags.map(tag => fuzzyMatch(tag, searchQuery));
-      const anyTagMatched = tagMatches.some(match => match.matches);
+      const cuisineTags = (item.cuisine || "")
+        .split(",")
+        .map((tag) => tag.trim());
+      const tagMatches = cuisineTags.map((tag) => fuzzyMatch(tag, searchQuery));
+      const anyTagMatched = tagMatches.some((match) => match.matches);
 
-      const validTagScores = tagMatches.filter(m => m.matches).map(m => m.score);
-      const bestCuisineScore = validTagScores.length > 0 ? Math.min(...validTagScores) : Infinity;
-
-      const isMatched = nameMatch.matches || anyTagMatched || dishMatch.matches;
+      const validTagScores = tagMatches
+        .filter((m) => m.matches)
+        .map((m) => m.score);
+      const bestCuisineScore =
+        validTagScores.length > 0 ? Math.min(...validTagScores) : Infinity;
 
       const validScores = [];
       if (nameMatch.matches) validScores.push(nameMatch.score);
       if (anyTagMatched) validScores.push(bestCuisineScore);
       if (dishMatch.matches) validScores.push(dishMatch.score);
 
-      const bestScore = validScores.length > 0 ? Math.min(...validScores) : Infinity;
+      const bestScore =
+        validScores.length > 0 ? Math.min(...validScores) : Infinity;
 
       return { item, isMatched: bestScore !== Infinity, score: bestScore };
     });
@@ -45,7 +52,7 @@ const SearchBar = ({ setResults }) => {
         if (isPureVegFilter && !match.item.isPureVeg) return false;
         return true;
       })
-      .sort((a, b) => a.score - b.score) 
+      .sort((a, b) => a.score - b.score)
       .map((match) => match.item);
 
     setResults(filteredAndSorted);
@@ -53,10 +60,7 @@ const SearchBar = ({ setResults }) => {
 
   return (
     <div className="relative w-full max-w-lg mx-auto">
-    
       <div className={styles.rowLayout}>
-        
-   
         <div className={styles.searchWrapper}>
           <div className={styles.searchIcon}>🔎</div>
           <input
@@ -82,7 +86,6 @@ const SearchBar = ({ setResults }) => {
           )}
         </div>
 
-      
         <div
           className={styles.switchWrapper}
           onClick={() => {
@@ -99,7 +102,6 @@ const SearchBar = ({ setResults }) => {
             />
           </div>
         </div>
-
       </div>
     </div>
   );
@@ -114,32 +116,29 @@ const CUISINES = restaurants.map((restaurant) => ({
   rating: restaurant.rating,
   deliveryTime: restaurant.deliveryTime,
   costForTwo: restaurant.costForTwo,
-  image: restaurant.image,
   isPureVeg: restaurant.isPureVeg,
   featuredDish: restaurant.featuredDish,
 }));
 
 const styles = {
-  
-  rowLayout: 
+  rowLayout:
     "grid grid-cols-1 justify-items-end gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3",
 
+  searchWrapper: "relative w-full md:max-w-md mx-auto",
 
-  searchWrapper: 
-    "relative w-full md:max-w-md mx-auto",
-    
   searchInput:
     "w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2.5 pl-11 pr-10 text-zinc-100 placeholder-zinc-500 outline-none transition focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-xs sm:text-sm",
-    
-  searchIcon: "absolute left-4 top-3 text-zinc-500 pointer-events-none text-xs sm:text-sm",
+
+  searchIcon:
+    "absolute left-4 top-3 text-zinc-500 pointer-events-none text-xs sm:text-sm",
   clearButton:
     "absolute right-4 top-3 text-zinc-500 hover:text-zinc-300 transition text-xs sm:text-sm cursor-pointer",
 
   switchWrapper:
     "inline-flex items-center gap-2 select-none cursor-pointer self-end md:self-auto shrink-0 bg-zinc-900/40 md:bg-zinc-900 border border-zinc-800/60 md:border-zinc-800 rounded-xl px-3 py-2 md:py-2.5",
 
-    
-  switchLabel: "text-[10px] sm:text-xs font-semibold tracking-wide text-zinc-400 uppercase",
+  switchLabel:
+    "text-[10px] sm:text-xs font-semibold tracking-wide text-zinc-400 uppercase",
   switchBg:
     "w-8 h-4.5 rounded-full relative transition-colors duration-200 ease-in-out",
   switchBgInactive: "bg-zinc-700",

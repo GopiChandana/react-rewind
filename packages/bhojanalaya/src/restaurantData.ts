@@ -1,4 +1,14 @@
-export const restaurants = [
+export interface Restaurant {
+  id: string;
+  name: string;
+  cuisine: string;
+  rating: number;
+  deliveryTime: string;
+  costForTwo: string;
+  isPureVeg: boolean;
+  featuredDish: string;
+}
+export const restaurants: Restaurant[] = [
   {
     id: "r1",
     name: "Saffron Spice Kitchen",
@@ -6,9 +16,8 @@ export const restaurants = [
     rating: 4.8,
     deliveryTime: "25-30 mins",
     costForTwo: "₹400",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Special Butter Chicken Thali"
+    featuredDish: "Special Butter Chicken Thali",
   },
   {
     id: "r2",
@@ -17,9 +26,8 @@ export const restaurants = [
     rating: 4.5,
     deliveryTime: "15-20 mins",
     costForTwo: "₹250",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Ghee Roast Masala Dosa"
+    featuredDish: "Ghee Roast Masala Dosa",
   },
   {
     id: "r3",
@@ -28,9 +36,8 @@ export const restaurants = [
     rating: 4.7,
     deliveryTime: "35-40 mins",
     costForTwo: "₹500",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Special Mutton Dum Biryani"
+    featuredDish: "Special Mutton Dum Biryani",
   },
   {
     id: "r4",
@@ -39,9 +46,8 @@ export const restaurants = [
     rating: 4.2,
     deliveryTime: "10-15 mins",
     costForTwo: "₹150",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Delhi Style Samosa Chaat"
+    featuredDish: "Delhi Style Samosa Chaat",
   },
   {
     id: "r5",
@@ -50,9 +56,8 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "30-35 mins",
     costForTwo: "₹350",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Paneer Butter Masala Combo"
+    featuredDish: "Paneer Butter Masala Combo",
   },
   {
     id: "r6",
@@ -61,9 +66,8 @@ export const restaurants = [
     rating: 4.4,
     deliveryTime: "15-20 mins",
     costForTwo: "₹200",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Kesar Gulab Jamun (2 Pcs)"
+    featuredDish: "Kesar Gulab Jamun (2 Pcs)",
   },
   {
     id: "r7",
@@ -72,9 +76,8 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "40-45 mins",
     costForTwo: "₹600",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Prawn Malabar Curry with Rice"
+    featuredDish: "Prawn Malabar Curry with Rice",
   },
   {
     id: "r8",
@@ -83,9 +86,8 @@ export const restaurants = [
     rating: 4.3,
     deliveryTime: "25-30 mins",
     costForTwo: "₹450",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Achari Paneer Tikka Platter"
+    featuredDish: "Achari Paneer Tikka Platter",
   },
   {
     id: "r9",
@@ -94,9 +96,8 @@ export const restaurants = [
     rating: 4.7,
     deliveryTime: "10-15 mins",
     costForTwo: "₹180",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Ghee Guntur Podi Idli"
+    featuredDish: "Ghee Guntur Podi Idli",
   },
   {
     id: "r10",
@@ -105,9 +106,8 @@ export const restaurants = [
     rating: 4.8,
     deliveryTime: "35-40 mins",
     costForTwo: "₹550",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Slow-Cooked Dal Makhani"
+    featuredDish: "Slow-Cooked Dal Makhani",
   },
   {
     id: "r11",
@@ -116,9 +116,8 @@ export const restaurants = [
     rating: 4.3,
     deliveryTime: "15-20 mins",
     costForTwo: "₹220",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Double Chicken Double Egg Roll"
+    featuredDish: "Double Chicken Double Egg Roll",
   },
   {
     id: "r12",
@@ -127,9 +126,8 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "25-30 mins",
     costForTwo: "₹300",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Special Shahi Satvik Thali"
+    featuredDish: "Special Shahi Satvik Thali",
   },
   {
     id: "r13",
@@ -138,9 +136,8 @@ export const restaurants = [
     rating: 4.9,
     deliveryTime: "40-45 mins",
     costForTwo: "₹700",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Awadhi Chicken Dum Biryani"
+    featuredDish: "Awadhi Chicken Dum Biryani",
   },
   {
     id: "r14",
@@ -149,9 +146,8 @@ export const restaurants = [
     rating: 4.5,
     deliveryTime: "20-25 mins",
     costForTwo: "₹380",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Amritsari Kulcha with Chole"
+    featuredDish: "Amritsari Kulcha with Chole",
   },
   {
     id: "r15",
@@ -160,9 +156,8 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "12-18 mins",
     costForTwo: "₹200",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Mysore Masala Dosa"
+    featuredDish: "Mysore Masala Dosa",
   },
   {
     id: "r16",
@@ -171,9 +166,8 @@ export const restaurants = [
     rating: 4.4,
     deliveryTime: "30-35 mins",
     costForTwo: "₹480",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Mutton Seekh Kebab Platter"
+    featuredDish: "Mutton Seekh Kebab Platter",
   },
   {
     id: "r17",
@@ -182,9 +176,8 @@ export const restaurants = [
     rating: 4.1,
     deliveryTime: "10-15 mins",
     costForTwo: "₹120",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Premium Kaju Almond Chikki"
+    featuredDish: "Premium Kaju Almond Chikki",
   },
   {
     id: "r18",
@@ -193,9 +186,8 @@ export const restaurants = [
     rating: 4.7,
     deliveryTime: "35-40 mins",
     costForTwo: "₹520",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Kerala Chicken Fry with Malabar Parotta"
+    featuredDish: "Kerala Chicken Fry with Malabar Parotta",
   },
   {
     id: "r19",
@@ -204,9 +196,9 @@ export const restaurants = [
     rating: 4.5,
     deliveryTime: "30-35 mins",
     costForTwo: "₹400",
-    image: "https://unsplash.com",
+
     isPureVeg: true,
-    featuredDish: "Authentic Dal Baati Churma Thali"
+    featuredDish: "Authentic Dal Baati Churma Thali",
   },
   {
     id: "r20",
@@ -215,9 +207,8 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "25-30 mins",
     costForTwo: "₹450",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Lucknowi Veg Dum Biryani"
+    featuredDish: "Lucknowi Veg Dum Biryani",
   },
   {
     id: "r21",
@@ -226,9 +217,8 @@ export const restaurants = [
     rating: 4.3,
     deliveryTime: "10-15 mins",
     costForTwo: "₹140",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Special Dahi Bhalla"
+    featuredDish: "Special Dahi Bhalla",
   },
   {
     id: "r22",
@@ -237,9 +227,8 @@ export const restaurants = [
     rating: 4.4,
     deliveryTime: "15-20 mins",
     costForTwo: "₹230",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Authentic Mini Tiffin Combo"
+    featuredDish: "Authentic Mini Tiffin Combo",
   },
   {
     id: "r23",
@@ -248,9 +237,8 @@ export const restaurants = [
     rating: 4.8,
     deliveryTime: "40-45 mins",
     costForTwo: "₹650",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Fiery Rajasthani Laal Maas Combo"
+    featuredDish: "Fiery Rajasthani Laal Maas Combo",
   },
   {
     id: "r24",
@@ -259,9 +247,8 @@ export const restaurants = [
     rating: 4.2,
     deliveryTime: "12-18 mins",
     costForTwo: "₹160",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Pyaaz Kachori with Kadhi"
+    featuredDish: "Pyaaz Kachori with Kadhi",
   },
   {
     id: "r25",
@@ -270,9 +257,8 @@ export const restaurants = [
     rating: 4.5,
     deliveryTime: "25-30 mins",
     costForTwo: "₹390",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Deluxe North Indian Paneer Thali"
+    featuredDish: "Deluxe North Indian Paneer Thali",
   },
   {
     id: "r26",
@@ -281,9 +267,8 @@ export const restaurants = [
     rating: 4.4,
     deliveryTime: "22-28 mins",
     costForTwo: "₹420",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Tandoori Butter Soya Chaap"
+    featuredDish: "Tandoori Butter Soya Chaap",
   },
   {
     id: "r27",
@@ -292,9 +277,8 @@ export const restaurants = [
     rating: 4.7,
     deliveryTime: "35-40 mins",
     costForTwo: "₹490",
-    image: "https://unsplash.com",
     isPureVeg: false,
-    featuredDish: "Spicy Chettinad Chicken Pepper Fry"
+    featuredDish: "Spicy Chettinad Chicken Pepper Fry",
   },
   {
     id: "r28",
@@ -303,8 +287,7 @@ export const restaurants = [
     rating: 4.6,
     deliveryTime: "15-20 mins",
     costForTwo: "₹240",
-    image: "https://unsplash.com",
     isPureVeg: true,
-    featuredDish: "Special Amritsari Chole Bhature"
-}
+    featuredDish: "Special Amritsari Chole Bhature",
+  },
 ];

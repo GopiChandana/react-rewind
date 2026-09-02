@@ -1,15 +1,23 @@
-import React from "react";
+import { Restaurant } from "../restaurantData";
 import DishCard from "./DishCard";
 
-const DishGrid = ({ results,successfulOrderPlaced }) => {
-  console.log(results,"dishGrid")
+interface DishGridProps {
+  results: Restaurant[];
+  successfulOrderPlaced: boolean;
+}
+
+const DishGrid = ({ results, successfulOrderPlaced }: DishGridProps) => {
   return (
     <div>
       {results?.length > 0 ? (
         <div className={styles.scrollView}>
           <div className={styles.gridContainer}>
             {results.map((item) => (
-              <DishCard dish={item} key={item.id} successfulOrderPlaced = {successfulOrderPlaced}/>
+              <DishCard
+                dish={item}
+                key={item.id}
+                successfulOrderPlaced={successfulOrderPlaced}
+              />
             ))}
           </div>
         </div>

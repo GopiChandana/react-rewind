@@ -1,8 +1,25 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { useCart } from "../hooks/useCart";
 import { useTabSync } from "../hooks/useTabSync";
 import RewindHistory from "./RewindHistory";
+
 const BillSplitter = lazy(() => import("./BillSplitter"));
+
+interface ShoppingCartProps {
+  onSuccessfulOrder: () => void;
+  onPlacingOrder: (value: boolean) => void;
+  minimumOrderPlaced: (value: boolean) => void;
+  successView: "receipt" | "split";
+  setSuccessView: Dispatch<SetStateAction<"receipt" | "split">>;
+}
 
 const ShoppingCart = ({
   onSuccessfulOrder,
@@ -10,7 +27,7 @@ const ShoppingCart = ({
   minimumOrderPlaced,
   successView,
   setSuccessView,
-}) => {
+}: ShoppingCartProps) => {
   const {
     cart,
     addToCart,
@@ -21,12 +38,11 @@ const ShoppingCart = ({
     gstFee,
     deliveryFee,
     platformFee,
-    totalItems,
   } = useCart();
 
   const [checkoutStatus, setCheckoutStatus] = useState("idle");
-  const listBottomRef = useRef(null);
-  const cartScrollContainerRef = useRef(null);
+  const listBottomRef = useRef<HTMLDivElement | null>(null);
+  const cartScrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [receiptSnapshot, setReceiptSnapshot] = useState(() => {
     const savedSnapshot = localStorage.getItem("bhojan_receipt_snapshot");
     return savedSnapshot ? JSON.parse(savedSnapshot) : [];
@@ -40,7 +56,7 @@ const ShoppingCart = ({
   useTabSync("bhojan_checkout_status", (newStatus) => {
     if (newStatus) setCheckoutStatus(newStatus);
   });
-  console.log(cart, checkoutStatus, "cart in shopping");
+
   useEffect(() => {
     if (listBottomRef.current) {
       listBottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -57,7 +73,7 @@ const ShoppingCart = ({
   }, [checkoutStatus]);
 
   useEffect(() => {
-    const handleTabReset = (e) => {
+    const handleTabReset = (e: StorageEvent) => {
       if (e.key === "bhojan_session_reset_trigger") {
         setCheckoutStatus("idle");
       }
@@ -67,7 +83,6 @@ const ShoppingCart = ({
   }, []);
 
   const handleCheckout = () => {
-    console.log("Processing Cart Request...");
     if (totalPrice < 250) {
       setCheckoutStatus("error");
       minimumOrderPlaced(true);
@@ -107,7 +122,7 @@ const ShoppingCart = ({
     return (
       <div className={styles.outerContainer}>
         <RewindHistory
-          isCartEmpty={cart?.length || 0}
+          isCartEmpty={cart?.length === 0}
           setCheckoutStatus={setCheckoutStatus}
           onPlacingOrder={onPlacingOrder}
         />
@@ -165,7 +180,7 @@ const ShoppingCart = ({
                         </span>
                       </div>
                     ))}
-                    <div className={styles.receiptDivider} />
+
                     <div className={styles.receiptItem}>
                       <span className="text-zinc-500 shrink-0 font-medium pr-2">
                         Paid Via
@@ -295,7 +310,7 @@ export default ShoppingCart;
 
 const styles = {
   outerContainer:
-    "flex flex-col h-full w-full max-w-full bg-zinc-950 overflow-x-hidden overflow-y-auto lg:overflow-hidden custom-scrollbar",
+    "flex flex-col h-full w-full max-w-full bg-zinc-950 overflow-x-hidden overflow-y-auto lg:overflow-hidden custom-scrollbar [::-webkit-scrollbar]:w-1.5 [::-webkit-scrollbar]:h-1.5 [::-webkit-scrollbar-track]:bg-zinc-950 [::-webkit-scrollbar-thumb]:bg-zinc-800 [::-webkit-scrollbar-thumb]:rounded-full",
 
   innerContainer:
     "flex flex-col flex-1 w-full relative min-h-0 justify-between",

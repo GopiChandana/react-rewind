@@ -1,8 +1,11 @@
-import React from "react";
 import { useCart } from "../hooks/useCart";
+import { Restaurant } from "../restaurantData";
 
-const DishCard = ({ dish, successfulOrderPlaced }) => {
-  console.log(successfulOrderPlaced, "orderStatus");
+interface DishCardProps {
+  dish: Restaurant;
+  successfulOrderPlaced: boolean;
+}
+const DishCard = ({ dish, successfulOrderPlaced }: DishCardProps) => {
   const {
     id,
     name,
@@ -38,12 +41,16 @@ const DishCard = ({ dish, successfulOrderPlaced }) => {
       <div className={styles.footerRow}>
         <div className={styles.minuteDetailsWrapper}>
           <span className={styles.rating}>
-            <span>⭐</span> {rating}
+            <span className="mr-1">⭐</span> {rating}
           </span>
           <span className="bg-zinc-950/40 py-0.5 px-0.5 rounded border border-zinc-800/30">
-            <span className="text-yellow-400 pr-1 font-bold">•</span>{deliveryTime}
+            <span className="text-yellow-400 pr-1 font-bold">•</span>
+            {deliveryTime}
           </span>
-          <span className="text-zinc-400 font-bold"><span className="text-yellow-400 pr-1">•</span>{costForTwo} for two</span>
+          <span className="text-zinc-400 font-bold">
+            <span className="text-yellow-400 pr-1">•</span>
+            {costForTwo} for two
+          </span>
         </div>
         <button
           onClick={() => {
@@ -56,12 +63,11 @@ const DishCard = ({ dish, successfulOrderPlaced }) => {
               });
             }
           }}
-          
           className={`${!successfulOrderPlaced ? "cursor-pointer" : "cursor-none pointer-events-none"} px-3 ml-2 py-1.5 lg:py-2 bg-orange-600/10 hover:bg-orange-600 text-orange-500 hover:text-white border border-orange-600/30 hover:border-orange-600 text-xs font-bold rounded-lg transition-all duration-200 active:scale-95 flex justify-center items-center gap-1 shadow-sm shrink-0 h-fit self-end`}
         >
-          <span className="md:hidden">Add</span>
+          <span className="lg:hidden">Add</span>
 
-          <span className="hidden md:inline">Add To Cart</span>
+          <span className="hidden lg:inline">Add To Cart</span>
         </button>
       </div>
     </div>
@@ -85,7 +91,8 @@ const styles = {
   footerRow:
     "flex flex-row items-center justify-between w-full pt-2.5 border-t border-zinc-800/60 mt-1",
 
-  minuteDetailsWrapper:"flex flex-wrap  md:flex-nowrap whitespace-nowrap items-center gap-1.5 sm:gap-3 text-[10px] sm:text-xs text-zinc-400 max-w-[70%] sm:max-w-none font-medium font-mono",
+  minuteDetailsWrapper:
+    "flex flex-wrap  xl:flex-nowrap whitespace-nowrap items-center gap-1.5 sm:gap-3 text-[10px] sm:text-xs text-zinc-400 max-w-[70%] sm:max-w-none font-medium font-mono",
   rating: "text-emerald-400 font-bold mx-1 flex items-center gap-1",
 
   vegDotBox:
