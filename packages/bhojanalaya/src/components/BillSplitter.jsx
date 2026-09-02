@@ -150,12 +150,12 @@ export default function BillSplitter({
       }
     });
 
-    text += `Grand Total Invoice: INR ${receiptTotalSnapshot}\n`;
-    text += `(Note: Proportional GST, delivery fee, and platform charges are fully included in the individual totals above.)\n`;
+    text += `Grand Total Invoice: INR ${receiptTotalSnapshot}\n\n`;
+    text += `(NOTE: Proportional GST, delivery fee, and platform charges are fully included in the individual totals above.)\n`;
 
 
    
-    text += `\n Settle up directly to this number: ${paymentTarget.trim()}\n`;
+    text += `\nSettle up directly to this number: ${paymentTarget.trim()}\n`;
     
 
     text += `\nPlease settle up soon. Thank you!`;

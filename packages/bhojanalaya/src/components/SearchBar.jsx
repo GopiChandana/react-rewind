@@ -122,7 +122,8 @@ const CUISINES = restaurants.map((restaurant) => ({
 const styles = {
   
   rowLayout: 
-    "grid grid-cols-1 gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3",
+    "grid grid-cols-1 justify-items-end gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3",
+
 
   searchWrapper: 
     "relative w-full md:max-w-md mx-auto",
@@ -135,7 +136,8 @@ const styles = {
     "absolute right-4 top-3 text-zinc-500 hover:text-zinc-300 transition text-xs sm:text-sm cursor-pointer",
 
   switchWrapper:
-    "flex items-center gap-2 select-none cursor-pointer w-full md:w-auto justify-end md:justify-start shrink-0 bg-zinc-900/40 md:bg-zinc-900 border border-zinc-800/60 md:border-zinc-800 rounded-xl px-3 py-2 md:py-2.5",
+    "inline-flex items-center gap-2 select-none cursor-pointer self-end md:self-auto shrink-0 bg-zinc-900/40 md:bg-zinc-900 border border-zinc-800/60 md:border-zinc-800 rounded-xl px-3 py-2 md:py-2.5",
+
     
   switchLabel: "text-[10px] sm:text-xs font-semibold tracking-wide text-zinc-400 uppercase",
   switchBg:
