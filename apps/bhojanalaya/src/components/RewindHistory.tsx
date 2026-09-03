@@ -41,15 +41,17 @@ export default function RewindHistory({
     <div className={styles.rewindContainer}>
       <div className={styles.rewindFunctionHeader}>
         <div className={styles.tabContainer}>
-          {!isCartEmpty && (
+          {/* {!isCartEmpty && (
+            <> */}
             <button
               onClick={() => setActiveTab("timeline")}
               className={styles.tabButton(activeTab === "timeline")}
             >
               ⏳ Timeline {isTimelinePending && "..."}
             </button>
-          )}
-          <div className="pb-1 text-zinc-300">|</div>
+         
+          <div className="pb-1 text-zinc-300">|</div> 
+          {/* </>)} */}
           <button
             onClick={() => setActiveTab("audit")}
             className={styles.tabButton(activeTab === "audit")}
@@ -66,7 +68,7 @@ export default function RewindHistory({
           >
             🔄 Reset Session
           </button>{" "}
-          {!isCartEmpty && (
+          {/* {!isCartEmpty && ( */}
             <div className={styles.rewindButtonControlGroup}>
               <button
                 onClick={rewindStep}
@@ -83,7 +85,7 @@ export default function RewindHistory({
                 Redo ⏭
               </button>
             </div>
-          )}
+          {/* )} */}
         </div>
       </div>
 

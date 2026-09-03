@@ -142,7 +142,7 @@ export default function BillSplitter({
       return;
     }
 
-    let text = `BHOJANALAYA ITEMISED BILL SPLIT:\n`;
+    let text = `GOPI'S BHOJANALAYA ITEMISED BILL SPLIT:\n`;
     text += `================================\n\n`;
 
     friendsList.forEach((f) => {

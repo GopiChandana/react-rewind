@@ -59,7 +59,7 @@ const SearchBar = ({ setResults }: SearchBarProps) => {
   }, [debouncedQuery, isPureVegFilter]);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto">
+    <div className="relative w-full max-w-lg mx-auto shadow-[0_12px_24px_-10px_rgba(234,88,12,0.2)]">
       <div className={styles.rowLayout}>
         <div className={styles.searchWrapper}>
           <div className={styles.searchIcon}>🔎</div>
@@ -122,7 +122,7 @@ const CUISINES = restaurants.map((restaurant) => ({
 
 const styles = {
   rowLayout:
-    "grid grid-cols-1 justify-items-end gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3",
+    "grid grid-cols-1 justify-items-end gap-2.5 w-full max-w-lg mx-auto md:flex md:items-center md:gap-3 pb-1",
 
   searchWrapper: "relative w-full md:max-w-md mx-auto",
 

@@ -10,7 +10,7 @@ const Header = ({ onCartClick }: HeaderProps) => {
     <div className={styles.headerWrapper}>
       <div className={styles.brandLogo}>
         <span className="font-black tracking-widest uppercase">
-          Bhojanalaya
+          <span className="text-zinc-300">GOPI'S</span> BHOJANALAYA
         </span>
         <span className="text-xl sm:text-2xl pl-1 pb-1 shrink-0">🍛</span>
       </div>

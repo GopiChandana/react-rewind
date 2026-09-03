@@ -54,7 +54,7 @@ react-rewind/                  <-- Project Root (Manager)
     "packages/*"
   ],
   "scripts": {
-    "start:bhojanalaya": "npm start --workspace=packages/bhojanalaya",
+    "start:bhojanalaya": "npm start --workspace=apps/bhojanalaya",
   }
 }
 ```

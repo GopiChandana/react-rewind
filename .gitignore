@@ -151,6 +151,6 @@ To-be-done/
 
 #bhojanalaya files
 
-packages/bhojanalaya/dist/
-packages/bhojanalaya/REASONS_FOR_THIS_DESIGN.md
+apps/bhojanalaya/dist/
+apps/bhojanalaya/REASONS_FOR_THIS_DESIGN.md
 
