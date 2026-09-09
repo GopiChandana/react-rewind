@@ -1,138 +1,120 @@
 # React Rewind
 
-A hands-on React learning repository focused on revisiting core concepts through practical, production-style implementations.
+A monorepo where I revisit React concepts through hands-on projects, experiments, and small implementations.
 
-The repository currently includes **Gopi's Bhojanalaya**, a responsive restaurant ordering experience built to explore React state management, reusable components, cart workflows, browser persistence, timeline-based undo/redo, and performance-conscious UI patterns.
+Instead of keeping the learning limited to isolated examples, I use this repository to build complete features and work through real application problems as I go.
 
-## Featured Project — Gopi's Bhojanalaya 🍛
+## Current Project
 
-**Gopi's Bhojanalaya** is a mobile-first restaurant ordering interface where users can browse restaurants and dishes, search the menu, filter vegetarian options, build a cart, review pricing, complete a simulated checkout flow, and revisit cart actions through a rewindable history.
+### 🍛 Gopi's Bhojanalaya
 
-### Live Demo
+The first application in the repo is **Gopi's Bhojanalaya** — a responsive restaurant ordering experience built with React and TypeScript.
 
-[**Open Gopi's Bhojanalaya**](https://gopis-bhojanalaya.vercel.app)
+**Live:** https://gopis-bhojanalaya.vercel.app
 
-## Key Features
+The app currently includes:
 
-- **Restaurant & dish browsing** — Browse structured restaurant and dish data with cuisine, ratings, delivery times, pricing, and featured recommendations.
-- **Search & filtering** — Quickly narrow the menu with search and a vegetarian-only filter.
-- **Cart management** — Add items, increment or decrement quantities, remove items automatically when quantity reaches zero, and clear the cart.
-- **Persistent cart state** — Cart contents are stored in `localStorage` so the active cart can be restored across visits.
-- **Cross-tab synchronization** — Cart and session changes can be broadcast between browser tabs using the `storage` event.
-- **Rewind / redo history** — Cart mutations are represented as timeline states, allowing users to move backward, forward, or jump to a previous state.
-- **Audit history** — User actions are recorded with timestamps for a persistent activity trail.
-- **Checkout flow** — Includes minimum-order validation, order confirmation, receipt presentation, and session reset handling.
-- **Bill splitting** — A lazily loaded bill-splitting flow supports sharing a receipt total through WhatsApp.
-- **Responsive UI** — Optimized for both compact mobile layouts and larger desktop screens.
-- **Interaction feedback** — Cart totals, quantities, status states, and checkout transitions update from shared React state.
+- Restaurant and dish browsing
+- Search and vegetarian-only filtering
+- Add-to-cart and quantity management
+- Persistent cart state using `localStorage`
+- Cart totals, GST, delivery and platform fee calculations
+- Minimum order validation
+- Simulated checkout and receipt flow
+- Bill splitting and WhatsApp sharing
+- Rewind / redo of cart actions
+- Cart action audit history
+- Cross-tab cart/session synchronization
+- Responsive mobile and desktop layouts
+- Lazy loading for the bill splitter
 
-## Technical Highlights
+The project is also being refined through actual usability testing, especially around the mobile ordering flow.
 
-This project is intentionally more than a static UI. It is designed around reusable React patterns and stateful application behavior.
+## Repository Structure
 
-### State & Data Flow
-
-A dedicated `CartProvider` exposes cart state and actions through a custom `useCart` hook. Cart items are modeled with a consistent `CartItem` type containing the dish identity, pricing, and quantity.
-
-Cart updates are also used to build a timeline of immutable cart states, which powers the rewind/redo experience. cite-placeholder-use-source-files-not-in-readme
-
-### Persistence & Synchronization
-
-The active cart is persisted in browser storage, while a lightweight storage-event mechanism synchronizes cart changes and session resets across tabs.
-
-### Performance
-
-The bill splitter is loaded with `React.lazy` and `Suspense`, keeping that heavier interaction out of the initial component path until it is needed.
-
-### Styling
-
-The Bhojanalaya app uses **Tailwind CSS** utility classes for responsive layout, spacing, states, and component styling.
-
-## Tech Stack
-
-| Technology | Usage |
-| --- | --- |
-| **React 19** | UI and component architecture |
-| **TypeScript** | Type-safe application development |
-| **Tailwind CSS 4** | Responsive styling and UI states |
-| **Parcel** | Development server and production bundling |
-| **Browser `localStorage`** | Cart/session persistence |
-| **React Context** | Shared cart and application state |
-
-## Project Structure
+This repository is set up as a **monorepo** using npm workspaces.
 
 ```text
 react-rewind/
 ├── apps/
-│   └── bhojanalaya/
-│       ├── src/
-│       │   ├── components/
-│       │   │   ├── BillSplitter.tsx
-│       │   │   ├── DishCard.tsx
-│       │   │   ├── DishGrid.tsx
-│       │   │   ├── Header.tsx
-│       │   │   ├── RewindHistory.tsx
-│       │   │   ├── SearchBar.tsx
-│       │   │   └── ShoppingCart.tsx
-│       │   ├── hooks/
-│       │   │   ├── useCart.tsx
-│       │   │   └── useTabSync.ts
-│       │   ├── utils/
-│       │   ├── App.tsx
-│       │   └── restaurantData.ts
-│       └── package.json
-├── shared-libs/
+│   ├── bhojanalaya/       # Current React application
+│   └── shared-utils/      # Shared utilities/package
+├── docs/                  # Notes and learning documentation
+├── my-code-implementations-with-explanations/
+├── To-be-done/
 └── package.json
 ```
 
-## Getting Started
+The monorepo is intentionally structured to make it easy to add more React applications and experiments. **Bhojanalaya is the first active app; other apps are currently in progress and will be added as they are built.**
 
-### Prerequisites
+## Tech Stack
 
-- Node.js
-- npm
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Parcel
+- React Context API
+- npm Workspaces
+- Browser `localStorage`
+- Vercel
 
-### Run Locally
+## Running Bhojanalaya Locally
+
+From the repository root:
 
 ```bash
 npm install
-npm run start
+npm run start:bhojanalaya
 ```
 
-For the Bhojanalaya app specifically:
+The root workspace script starts the Bhojanalaya app through its workspace configuration.
+
+You can also run the app directly:
 
 ```bash
 cd apps/bhojanalaya
 npm install
-npm run start
+npm start
 ```
 
-The app is served through Parcel and can be opened at the local URL shown in the terminal.
-
-### Production Build
+### Production build
 
 ```bash
+cd apps/bhojanalaya
 npm run build
 ```
 
-## Deployment
+## A Few Things I'm Exploring Here
 
-The Bhojanalaya app is deployed on **Vercel**.
+This repo is mainly a space for learning by building, so the focus is not just on getting a UI to work.
 
-Production deployments can be triggered through the connected Git repository or the Vercel CLI.
+Some of the concepts being explored include:
 
-## Why This Project Exists
+- Reusable React components and props
+- Shared state with Context and custom hooks
+- Derived state and state transitions
+- Browser persistence and cross-tab communication
+- Undo/redo and timeline-based state management
+- Responsive UI and mobile-first interaction
+- Lazy loading and code splitting
+- TypeScript types and safer component APIs
+- Performance and rendering behaviour
+- Debugging and documenting implementation decisions
 
-**React Rewind** is a practical learning workspace rather than a collection of isolated tutorials. Each project is used to revisit React fundamentals by solving real application problems: shared state, derived values, persistence, history, responsive interaction design, lazy loading, and user-flow handling.
+## Why "React Rewind"?
 
-The goal is to turn repeated practice into production-ready habits.
+The idea is simple: go back over React fundamentals, but this time by actually building things with them.
 
-## Repository Status
+Each project is a chance to revisit something I have learned, understand it more deeply, and turn it into a working feature rather than just another tutorial example.
 
-This repository is actively used as a learning and implementation workspace. Features evolve as new React concepts are revisited and existing workflows are refined through real user testing.
+## Status
+
+🚧 **Work in progress**
+
+Bhojanalaya is the current active application. The monorepo will continue to grow as more projects and experiments are developed.
 
 ## Author
 
 **Gopi Chandana**
 
-[GitHub](https://github.com/GopiChandana)
+GitHub: https://github.com/GopiChandana
