@@ -27,7 +27,9 @@ The interesting part is the cart: **it has a rewindable history**. Cart actions 
 
 A short mobile walkthrough covering the main ordering flow, cart controls, checkout, receipt and bill splitting.
 
-<a href="https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52">▶️ <strong>Watch the mobile walkthrough</strong></a>
+<p align="center">
+<a href="https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52"><strong>▶️ Watch the mobile walkthrough</strong></a>
+</p>
 
 ### 🖥️ Desktop
 
