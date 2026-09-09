@@ -1,3 +1,27 @@
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 04 52" src="https://github.com/user-attachments/assets/72f7479c-f3e1-479d-8645-e9b84327bf39" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 04 44" src="https://github.com/user-attachments/assets/a3afdedb-396f-481d-970b-5610e2d69fe1" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 04 23" src="https://github.com/user-attachments/assets/10a7f6e0-941d-4b2e-8444-992a68f5a419" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 04 14" src="https://github.com/user-attachments/assets/5a38e5af-8da2-4d0b-97ea-222bf09ed426" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 04 03" src="https://github.com/user-attachments/assets/b1f369b2-f639-430a-8911-9be3c7fed8b8" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 02 23" src="https://github.com/user-attachments/assets/3ff32721-c9b4-40d4-90b5-947ebb03fffd" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 01 51" src="https://github.com/user-attachments/assets/d91fd761-1b83-47f5-8ef8-4898f3b7dc43" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 01 44" src="https://github.com/user-attachments/assets/2656e83a-1253-40fa-a8b5-6122b4353b68" />
+
+
+https://github.com/user-attachments/assets/a644ed1b-eaaa-409b-b36b-a3241a6de84e
+
+
+
+https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52
+
+
+
+
+
+<img width="630" height="1349" alt="WhatsApp Image 2026-09-09 at 14 00 16" src="https://github.com/user-attachments/assets/dcc2dc47-bd2f-45f7-a9a7-5ef144b18c22" />
+<img width="630" height="1339" alt="WhatsApp Image 2026-09-09 at 14 00 16 (1)" src="https://github.com/user-attachments/assets/b04e0391-d6bc-457a-a0a8-c6a9f319dfc9" />
+<img width="630" height="1346" alt="WhatsApp Image 2026-09-09 at 14 00 15" src="https://github.com/user-attachments/assets/6771ae05-4a11-4317-aae6-5e4e17f03c4a" />
+<img width="630" height="1341" alt="WhatsApp Image 2026-09-09 at 14 00 15 (1)" src="https://github.com/user-attachments/assets/2da3c23b-94f4-4eef-8231-48241a3a3149" />
 # React Rewind
 
 A **React learning monorepo** where I revisit concepts by building real, working features instead of isolated examples.
