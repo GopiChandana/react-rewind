@@ -21,6 +21,18 @@ The interesting part is the cart: **it has a rewindable history**. Cart actions 
 - 📱 **Responsive single-page UI** with a dedicated mobile cart experience
 - ⚡ **Lazy-loaded bill splitter** using `React.lazy` and `Suspense`
 
+## Demo
+
+📱 **Mobile walkthrough**
+
+A short mobile walkthrough covering the main ordering flow, cart controls, checkout, receipt and bill splitting.
+
+> Mobile walkthrough video — coming next
+
+🖥️ **Desktop**
+
+Desktop screenshots highlight the wider layout and the cart's **Timeline / Food Ledger** history controls.
+
 ## How to Use
 
 1. **Browse** restaurants and dishes on the page.
@@ -30,6 +42,17 @@ The interesting part is the cart: **it has a rewindable history**. Cart actions 
 5. **Checkout** — orders below ₹250 are blocked with validation.
 6. **View the receipt**, split the bill if needed, and share it through WhatsApp.
 7. **Rewind / Redo** to move through previous cart states and restore an earlier cart.
+
+## Lighthouse
+
+Tested on the deployed application using Chrome Lighthouse in Incognito mode.
+
+| | Performance | Accessibility | Best Practices | SEO |
+|---|---:|---:|---:|---:|
+| 📱 Mobile | **100** | **100** | **100** | **90** |
+| 🖥️ Desktop | **100** | **100** | **100** | **90** |
+
+> Lighthouse scores can vary depending on device, network conditions, browser extensions and other local factors.
 
 ## Monorepo Structure
 
