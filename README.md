@@ -27,37 +27,21 @@ The interesting part is the cart: **it has a rewindable history**. Cart actions 
 
 A short mobile walkthrough covering the main ordering flow, cart controls, checkout, receipt and bill splitting.
 
-https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52
+[▶️ **Watch the mobile walkthrough**](https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52)
 
-**Application screenshots:**
-
-<img width="630" alt="Bhojanalaya mobile application screenshot 1" src="https://github.com/user-attachments/assets/dcc2dc47-bd2f-45f7-a9a7-5ef14b18c22" />
-
-<img width="630" alt="Bhojanalaya mobile application screenshot 2" src="https://github.com/user-attachments/assets/b04e0391-d6bc-457a-a0a8-c6a9f319dfc9" />
-
-<img width="630" alt="Bhojanalaya mobile application screenshot 3" src="https://github.com/user-attachments/assets/6771ae05-4a11-4317-aae6-5e4e17f03c4a" />
-
-<img width="630" alt="Bhojanalaya mobile application screenshot 4" src="https://github.com/user-attachments/assets/2da3c23b-94f4-4eef-8231-48241a3a3149" />
+<p>
+<img width="280" alt="Bhojanalaya mobile application - restaurant browsing" src="https://github.com/user-attachments/assets/dcc2dc47-bd2f-45f7-a9a7-5ef14b18c22" />
+<img width="280" alt="Bhojanalaya mobile application - Food Ledger and rewind history" src="https://github.com/user-attachments/assets/2da3c23b-94f4-4eef-8231-48241a3a3149" />
+</p>
 
 ### 🖥️ Desktop
 
 Application screenshots showing the wider layout, cart experience and **Timeline / Food Ledger** history controls.
 
-<img width="1280" alt="Bhojanalaya desktop application screenshot 1" src="https://github.com/user-attachments/assets/72f7479c-f3e1-479d-8645-e9b84327bf39" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 2" src="https://github.com/user-attachments/assets/a3afdedb-396f-481d-970b-5610e2d69fe1" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 3" src="https://github.com/user-attachments/assets/10a7f6e0-941d-4b2e-8444-992a68f5a419" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 4" src="https://github.com/user-attachments/assets/5a38e5af-8da2-4d0b-97ea-222bf09ed426" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 5" src="https://github.com/user-attachments/assets/b1f369b2-f639-430a-8911-9be3c7fed8b8" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 6" src="https://github.com/user-attachments/assets/3ff32721-c9b4-40d4-90b5-947ebb03fffd" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 7" src="https://github.com/user-attachments/assets/d91fd761-1b83-47f5-8ef8-4898f3b7dc43" />
-
-<img width="1280" alt="Bhojanalaya desktop application screenshot 8" src="https://github.com/user-attachments/assets/2656e83a-1253-40fa-a8b5-6122b4353b68" />
+<p>
+<img width="420" alt="Bhojanalaya desktop application screenshot 1" src="https://github.com/user-attachments/assets/72f7479c-f3e1-479d-8645-e9b84327bf39" />
+<img width="420" alt="Bhojanalaya desktop application screenshot 2" src="https://github.com/user-attachments/assets/a3afdedb-396f-481d-970b-5610e2d69fe1" />
+</p>
 
 ## How to Use
 
