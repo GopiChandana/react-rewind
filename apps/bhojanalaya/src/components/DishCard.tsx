@@ -16,7 +16,10 @@ const DishCard = ({ dish, successfulOrderPlaced }: DishCardProps) => {
     isPureVeg,
     featuredDish,
   } = dish;
-  const { addToCart } = useCart();
+
+  const { cart, addToCart, removeFromCart } = useCart();
+  const item = cart.find((item) => item.id === id);
+
   return (
     <div className={styles.dishCard}>
       <div className={styles.titleRow}>
@@ -52,23 +55,54 @@ const DishCard = ({ dish, successfulOrderPlaced }: DishCardProps) => {
             {costForTwo} for two
           </span>
         </div>
-        <button
-          onClick={() => {
-            if (!successfulOrderPlaced) {
-              addToCart({
-                id: id,
-                featuredDish: featuredDish,
-                name: name,
-                price: Math.floor(parseInt(costForTwo) / 2) || 150,
-              });
-            }
-          }}
-          className={`${!successfulOrderPlaced ? "cursor-pointer" : "cursor-none pointer-events-none"} px-3 ml-2 py-1.5 lg:py-2 bg-orange-600/10 hover:bg-orange-600 text-orange-500 hover:text-white border border-orange-600/30 hover:border-orange-600 text-xs font-bold rounded-lg transition-all duration-200 active:scale-95 flex justify-center items-center gap-1 shadow-sm shrink-0 h-fit self-end`}
-        >
-          <span className="lg:hidden">Add</span>
 
-          <span className="hidden lg:inline">Add To Cart</span>
-        </button>
+        {item && item.quantity > 0 ? (
+          
+          <div className={styles.quantityContainer}>
+           
+            <button
+              onClick={() => {
+                if (!successfulOrderPlaced) {
+                  console.log(successfulOrderPlaced,"success")
+                  removeFromCart(item);
+                }
+              }}
+              className={styles.quantityButton(!successfulOrderPlaced)}
+            >
+              -
+            </button>
+            <span className={styles.quantity}>{item.quantity}</span>
+            <button
+              onClick={() => {
+                if (!successfulOrderPlaced) {
+                  return addToCart(item);
+                }
+              }}
+              className={styles.quantityButton(!successfulOrderPlaced)}
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                if (!successfulOrderPlaced) {
+                  addToCart({
+                    id: id,
+                    featuredDish: featuredDish,
+                    name: name,
+                    price: Math.floor(parseInt(costForTwo) / 2) || 150,
+                  });
+                }
+              }}
+              className={`${!successfulOrderPlaced ? "cursor-pointer" : "cursor-none pointer-events-none"} px-3 ml-2 py-1.5 lg:py-2 bg-orange-600/10 hover:bg-orange-600 text-orange-500 hover:text-white border border-orange-600/30 hover:border-orange-600 text-xs font-bold rounded-lg transition-all duration-200 active:scale-95 flex justify-center items-center gap-1 shadow-sm shrink-0 h-fit self-end`}
+            >
+              <span className="lg:hidden">Add</span>
+              <span className="hidden lg:inline">Add To Cart</span>{" "}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
@@ -101,4 +135,14 @@ const styles = {
   nonVegDotBox:
     "w-4 h-4 border-2 border-red-600 flex items-center justify-center p-0.5 mt-1 rounded-sm bg-zinc-950",
   nonVegDot: "w-1.5 h-1.5 rounded-full bg-red-600",
+
+  quantityContainer:
+    "flex items-center gap-1.5 bg-zinc-800/80 border border-zinc-700/50 rounded-lg p-1 shrink-0 select-none",
+  quantityButton: (successfulOrderNotPlaced: boolean) =>
+    `text-zinc-400 hover:text-white px-1.5 font-bold cursor-pointer text-xs sm:text-sm ${
+      successfulOrderNotPlaced
+        ? "cursor-pointer"
+        : "cursor-none pointer-events-none"
+    }`,
+  quantity: "text-xs font-semibold text-zinc-200 w-4 text-center font-mono",
 };
