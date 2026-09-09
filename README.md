@@ -27,16 +27,16 @@ The interesting part is the cart: **it has a rewindable history**. Cart actions 
 
 A short mobile walkthrough covering the main ordering flow, cart controls, checkout, receipt and bill splitting.
 
-[▶️ **Watch the mobile walkthrough**](https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52)
+<a href="https://github.com/user-attachments/assets/f28a0468-95db-4d37-b595-c93711032e52">▶️ <strong>Watch the mobile walkthrough</strong></a>
 
 ### 🖥️ Desktop
 
 Application screenshots showing the main ordering interface, **Timeline / Food Ledger** history, checkout receipt and bill splitting.
 
 <p>
-<img width="420" alt="Bhojanalaya desktop application - Timeline and Food Ledger" src="https://github.com/user-attachments/assets/238146a4-b900-42ba-9d5f-8bb594120c0b" />
-<img width="420" alt="Bhojanalaya desktop application - order receipt" src="https://github.com/user-attachments/assets/43a633b6-6626-40fd-a00b-3bf512d854c9" />
 <img width="420" alt="Bhojanalaya desktop application - bill splitter" src="https://github.com/user-attachments/assets/44e9e4ba-6e2d-43e7-aef1-17f85d288026" />
+<img width="420" alt="Bhojanalaya desktop application - order receipt" src="https://github.com/user-attachments/assets/43a633b6-6626-40fd-a00b-3bf512d854c9" />
+<img width="420" alt="Bhojanalaya desktop application - Timeline and Food Ledger" src="https://github.com/user-attachments/assets/238146a4-b900-42ba-9d5f-8bb594120c0b" />
 </p>
 
 ## How to Use
