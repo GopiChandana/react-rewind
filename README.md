@@ -1,3 +1,6 @@
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 02 23" src="https://github.com/user-attachments/assets/238146a4-b900-42ba-9d5f-8bb594120c0b" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 01 51" src="https://github.com/user-attachments/assets/43a633b6-6626-40fd-a00b-3bf512d854c9" />
+<img width="1280" height="800" alt="Screenshot 2026-09-09 at 14 01 44" src="https://github.com/user-attachments/assets/44e9e4ba-6e2d-43e7-aef1-17f85d288026" />
 # React Rewind
 
 A **React learning monorepo** where I revisit concepts by building real, working features instead of isolated examples.
