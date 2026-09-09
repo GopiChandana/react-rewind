@@ -1,64 +1,63 @@
 # React Rewind
 
-A monorepo where I revisit React concepts through hands-on projects, experiments, and small implementations.
+A **React learning monorepo** where I revisit concepts by building real, working features instead of isolated examples.
 
-Instead of keeping the learning limited to isolated examples, I use this repository to build complete features and work through real application problems as I go.
+## 🍛 Gopi's Bhojanalaya
 
-## Current Project
+A restaurant ordering app with a twist: **the cart itself has a rewindable history**. Cart actions are stored as timeline states, so users can undo, redo, or jump back to an earlier cart state. The app also keeps an audit trail and can sync cart/session changes across browser tabs.
 
-### 🍛 Gopi's Bhojanalaya
-
-The first application in the repo is **Gopi's Bhojanalaya** — a responsive restaurant ordering experience built with React and TypeScript.
+It also covers the complete ordering flow — from browsing dishes to checkout, receipt generation, and bill splitting.
 
 **Live:** https://gopis-bhojanalaya.vercel.app
 
-The app currently includes:
+### What makes it interesting
 
-- Restaurant and dish browsing
-- Search and vegetarian-only filtering
-- Add-to-cart and quantity management
-- Persistent cart state using `localStorage`
-- Cart totals, GST, delivery and platform fee calculations
-- Minimum order validation
-- Simulated checkout and receipt flow
-- Bill splitting and WhatsApp sharing
-- Rewind / redo of cart actions
-- Cart action audit history
-- Cross-tab cart/session synchronization
-- Responsive mobile and desktop layouts
-- Lazy loading for the bill splitter
+- ⏪ **Rewind / redo cart history** with timeline navigation
+- 🧾 **Action audit trail** with timestamps
+- 🔄 **Cross-tab state synchronization** using browser storage events
+- 💾 **Persistent cart/session state** with `localStorage`
+- 🧮 **Real-time pricing** with GST, delivery and platform fees
+- 📊 **Bill splitter** with WhatsApp sharing
+- 📱 **Responsive, mobile-first ordering flow**
+- ⚡ **Lazy-loaded checkout components** using `React.lazy` and `Suspense`
 
-The project is also being refined through actual usability testing, especially around the mobile ordering flow.
+## How to Use
 
-## Repository Structure
+1. **Browse** the available restaurants and dishes.
+2. **Search or filter** the menu, including a vegetarian-only option.
+3. **Add dishes to the cart** and adjust quantities.
+4. **Open the cart** to review items and the complete price breakdown.
+5. **Proceed to checkout** — orders below ₹250 are blocked with a clear validation message.
+6. **View the receipt**, split the bill if needed, and share it through WhatsApp.
+7. Use **Rewind / Redo** to move through previous cart states and restore an earlier version of the cart.
 
-This repository is set up as a **monorepo** using npm workspaces.
+## Monorepo Structure
+
+This repository uses **npm workspaces** and is structured to hold multiple React applications and shared packages.
 
 ```text
 react-rewind/
 ├── apps/
-│   ├── bhojanalaya/       # Current React application
-│   └── shared-utils/      # Shared utilities/package
-├── docs/                  # Notes and learning documentation
+│   ├── bhojanalaya/       # Current active application
+│   └── shared-utils/      # Shared package
+├── docs/                  # React notes and implementation documentation
 ├── my-code-implementations-with-explanations/
-├── To-be-done/
 └── package.json
 ```
 
-The monorepo is intentionally structured to make it easy to add more React applications and experiments. **Bhojanalaya is the first active app; other apps are currently in progress and will be added as they are built.**
+**Bhojanalaya is the first active app. Other applications are currently being built and will be added to the monorepo as they progress.**
 
 ## Tech Stack
 
-- React 19
-- TypeScript
+- React 19 + TypeScript
 - Tailwind CSS 4
+- React Context API + custom hooks
 - Parcel
-- React Context API
 - npm Workspaces
-- Browser `localStorage`
+- `localStorage` + browser Storage Events
 - Vercel
 
-## Running Bhojanalaya Locally
+## Run Locally
 
 From the repository root:
 
@@ -67,9 +66,7 @@ npm install
 npm run start:bhojanalaya
 ```
 
-The root workspace script starts the Bhojanalaya app through its workspace configuration.
-
-You can also run the app directly:
+Or run the app directly:
 
 ```bash
 cd apps/bhojanalaya
@@ -77,44 +74,18 @@ npm install
 npm start
 ```
 
-### Production build
+### Build
 
 ```bash
 cd apps/bhojanalaya
 npm run build
 ```
 
-## A Few Things I'm Exploring Here
-
-This repo is mainly a space for learning by building, so the focus is not just on getting a UI to work.
-
-Some of the concepts being explored include:
-
-- Reusable React components and props
-- Shared state with Context and custom hooks
-- Derived state and state transitions
-- Browser persistence and cross-tab communication
-- Undo/redo and timeline-based state management
-- Responsive UI and mobile-first interaction
-- Lazy loading and code splitting
-- TypeScript types and safer component APIs
-- Performance and rendering behaviour
-- Debugging and documenting implementation decisions
-
-## Why "React Rewind"?
-
-The idea is simple: go back over React fundamentals, but this time by actually building things with them.
-
-Each project is a chance to revisit something I have learned, understand it more deeply, and turn it into a working feature rather than just another tutorial example.
-
 ## Status
 
-🚧 **Work in progress**
-
-Bhojanalaya is the current active application. The monorepo will continue to grow as more projects and experiments are developed.
+🚧 **Work in progress** — Bhojanalaya is the current active project, with more applications in development as part of the monorepo.
 
 ## Author
 
-**Gopi Chandana**
-
-GitHub: https://github.com/GopiChandana
+**Gopi Chandana**  
+https://github.com/GopiChandana
