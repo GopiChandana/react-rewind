@@ -4,9 +4,9 @@ A **React learning monorepo** where I revisit concepts by building real, working
 
 ## 🍛 Gopi's Bhojanalaya
 
-A restaurant ordering app with a twist: **the cart itself has a rewindable history**. Cart actions are stored as timeline states, so users can undo, redo, or jump back to an earlier cart state. The app also keeps an audit trail and can sync cart/session changes across browser tabs.
+A **single-page React application** built as a component-based restaurant ordering interface. Restaurants, search, filters, dishes, cart, checkout and supporting interactions are composed within the same page rather than split across multiple routes/pages.
 
-It also covers the complete ordering flow — from browsing dishes to checkout, receipt generation, and bill splitting.
+The interesting part is the cart: **it has a rewindable history**. Cart actions are stored as timeline states, so users can undo, redo, or jump back to an earlier cart state. The app also keeps an audit trail and can sync cart/session changes across browser tabs.
 
 **Live:** https://gopis-bhojanalaya.vercel.app
 
@@ -18,18 +18,18 @@ It also covers the complete ordering flow — from browsing dishes to checkout, 
 - 💾 **Persistent cart/session state** with `localStorage`
 - 🧮 **Real-time pricing** with GST, delivery and platform fees
 - 📊 **Bill splitter** with WhatsApp sharing
-- 📱 **Responsive, mobile-first ordering flow**
-- ⚡ **Lazy-loaded checkout components** using `React.lazy` and `Suspense`
+- 📱 **Responsive single-page UI** with a dedicated mobile cart experience
+- ⚡ **Lazy-loaded bill splitter** using `React.lazy` and `Suspense`
 
 ## How to Use
 
-1. **Browse** the available restaurants and dishes.
-2. **Search or filter** the menu, including a vegetarian-only option.
-3. **Add dishes to the cart** and adjust quantities.
-4. **Open the cart** to review items and the complete price breakdown.
-5. **Proceed to checkout** — orders below ₹250 are blocked with a clear validation message.
+1. **Browse** restaurants and dishes on the page.
+2. **Search or filter** the menu, including the vegetarian-only option.
+3. **Add dishes** and adjust quantities directly from the interface.
+4. **Open the cart** to review items and the price breakdown.
+5. **Checkout** — orders below ₹250 are blocked with validation.
 6. **View the receipt**, split the bill if needed, and share it through WhatsApp.
-7. Use **Rewind / Redo** to move through previous cart states and restore an earlier version of the cart.
+7. **Rewind / Redo** to move through previous cart states and restore an earlier cart.
 
 ## Monorepo Structure
 
